@@ -1,0 +1,17 @@
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\add-ai-provider\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\add-command\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\add-icon\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\add-test\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\add-webview\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\analyze\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\audit-commits\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\commit\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\create-issue\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\investigate\SKILL.md
+C:\Users\AMAN PAL\.antigravity\extensions\eamodio.gitlens-17.11.1-universal\.claude\skills\review\SKILL.md
+C:\Users\AMAN PAL\.antigravity\skills-antigravity\create-rule\SKILL.md
+C:\Users\AMAN PAL\.antigravity\skills-antigravity\create-skill\SKILL.md
+C:\Users\AMAN PAL\.antigravity\skills-antigravity\create-subagent\SKILL.md
+C:\Users\AMAN PAL\.antigravity\skills-antigravity\migrate-to-skills\SKILL.md
+C:\Users\AMAN PAL\.antigravity\skills-antigravity\shell\SKILL.md
+C:\Users\AMAN PAL\.antigravity\skills-antigravity\update-antigravity-settings\SKILL.md

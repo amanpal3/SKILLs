@@ -1,0 +1,6 @@
+{
+  "name": "coderabbit",
+  "displayName": "CodeRabbit AI Quality Review",
+  "version": "1.0.0",
+  "description": "Autonomous senior engineer code review, OWASP security scanning, and automated quality gate enforcement."
+}

@@ -1,0 +1,136 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Google Sans Flex",
+      "role": "heading"
+    },
+    {
+      "family": "Google Sans",
+      "role": "body"
+    },
+    {
+      "family": "Google Symbols",
+      "role": "unknown"
+    }
+  ],
+  "colors": {
+    "primary": "#C5BDAD",
+    "accent": "#2FA1D6",
+    "background": "#EDEDED",
+    "textPrimary": "#121317",
+    "link": "#2FA1D6"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Google Sans",
+      "heading": "Google Sans Flex"
+    },
+    "fontStacks": {
+      "heading": [
+        "Google Sans Flex",
+        "Google Sans",
+        "sans-serif"
+      ],
+      "body": [
+        "Google Sans Flex",
+        "Google Sans",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Google Sans Flex",
+        "Google Sans",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "80px",
+      "h2": "42px",
+      "body": "24px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "4px"
+  },
+  "components": {
+    "buttonPrimary": {
+      "background": "#F8F9FC",
+      "textColor": "#121317",
+      "borderRadius": "2376px",
+      "borderRadiusCorners": {
+        "topLeft": "2376px",
+        "topRight": "2376px",
+        "bottomRight": "2376px",
+        "bottomLeft": "2376px"
+      },
+      "shadow": "none"
+    },
+    "buttonSecondary": {
+      "background": "#1F1F1F",
+      "textColor": "#FFFFFF",
+      "borderRadius": "9999px",
+      "borderRadiusCorners": {
+        "topLeft": "9999px",
+        "topRight": "9999px",
+        "bottomRight": "9999px",
+        "bottomLeft": "9999px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": "data:image/svg+xml;utf8,%3Csvg%20... (truncated SVG for brevity, the raw format is retained in the actual code)",
+    "favicon": "https://antigravity.google/favicon.ico",
+    "ogImage": "https://antigravity.google/assets/image/sitecards/sitecard-default.png"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is visible, located in the header, and matches the brand inferred from the URL and page title.",
+    "confidence": 0.95,
+    "source": "llm"
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 2,
+      "text": "keyboard_arrow_right",
+      "reasoning": "Button #2 has a vibrant blue background (#F8F9FC) and is part of a navigation control, making it more action-oriented compared to the others."
+    },
+    "secondary": {
+      "index": 0,
+      "text": "play_arrow",
+      "reasoning": "Button #0 has a different color group (#1F1F1F) and serves as a play control, which is secondary to navigation."
+    },
+    "confidence": 0.9
+  },
+  "personality": {
+    "tone": "modern",
+    "energy": "medium",
+    "targetAudience": "tech enthusiasts"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.9,
+    "colors": 0.9,
+    "overall": 0.9
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is visible, located in the header, and matches the brand inferred from the URL and page title.",
+        "confidence": 0.95
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}

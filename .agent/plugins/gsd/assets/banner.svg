@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D0D1A"/>
+      <stop offset="50%" style="stop-color:#1A0D2E"/>
+      <stop offset="100%" style="stop-color:#0D1A2E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7B2D8E"/>
+      <stop offset="50%" style="stop-color:#FF6D00"/>
+      <stop offset="100%" style="stop-color:#00C853"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7B2D8E;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#00C853;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="rocket-body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF8A65"/>
+      <stop offset="100%" style="stop-color:#FF6D00"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6D00"/>
+      <stop offset="50%" style="stop-color:#FFD54F"/>
+      <stop offset="100%" style="stop-color:#FFEE58"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="300" fill="url(#bg)" rx="12"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.04" stroke="#ffffff" stroke-width="0.5">
+    <line x1="0" y1="50" x2="900" y2="50"/>
+    <line x1="0" y1="100" x2="900" y2="100"/>
+    <line x1="0" y1="150" x2="900" y2="150"/>
+    <line x1="0" y1="200" x2="900" y2="200"/>
+    <line x1="0" y1="250" x2="900" y2="250"/>
+    <line x1="150" y1="0" x2="150" y2="300"/>
+    <line x1="300" y1="0" x2="300" y2="300"/>
+    <line x1="450" y1="0" x2="450" y2="300"/>
+    <line x1="600" y1="0" x2="600" y2="300"/>
+    <line x1="750" y1="0" x2="750" y2="300"/>
+  </g>
+
+  <!-- Decorative orbs -->
+  <circle cx="100" cy="70" r="80" fill="#7B2D8E" opacity="0.08"/>
+  <circle cx="800" cy="230" r="100" fill="#00C853" opacity="0.06"/>
+  <circle cx="450" cy="150" r="200" fill="#FF6D00" opacity="0.02"/>
+
+  <!-- Accent line top -->
+  <rect x="0" y="0" width="900" height="3" fill="url(#accent)" rx="1.5"/>
+
+  <!-- Rocket icon -->
+  <g transform="translate(195, 78)">
+    <!-- Flame -->
+    <path d="M30 68 L24 85 L30 80 L36 85 Z" fill="url(#flame)" opacity="0.9"/>
+    <path d="M30 72 L27 82 L30 78 L33 82 Z" fill="#FFEE58" opacity="0.7"/>
+    <!-- Body -->
+    <path d="M22 40 C22 20 30 5 30 5 C30 5 38 20 38 40 L38 65 C38 68 22 68 22 65 Z" fill="url(#rocket-body)"/>
+    <!-- Nose cone highlight -->
+    <path d="M28 15 C28 10 30 5 30 5 C30 5 31 8 31 15 Z" fill="#FFAB91" opacity="0.5"/>
+    <!-- Window -->
+    <circle cx="30" cy="35" r="5" fill="#0D0D1A" stroke="#FFD54F" stroke-width="1.2"/>
+    <circle cx="30" cy="35" r="3" fill="#1A0D2E"/>
+    <circle cx="29" cy="34" r="1" fill="#FFFFFF" opacity="0.4"/>
+    <!-- Fins -->
+    <path d="M22 55 L14 68 L22 65 Z" fill="#7B2D8E"/>
+    <path d="M38 55 L46 68 L38 65 Z" fill="#7B2D8E"/>
+  </g>
+
+  <!-- Main title -->
+  <text x="265" y="135" font-family="'Segoe UI', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="60" font-weight="800" fill="#FFFFFF" letter-spacing="-1">GET SHIT DONE</text>
+
+  <!-- Subtitle -->
+  <text x="268" y="170" font-family="'Segoe UI', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="18" font-weight="400" fill="#9E9EAF" letter-spacing="6">FOR ANTIGRAVITY</text>
+
+  <!-- Description -->
+  <text x="450" y="215" font-family="'Segoe UI', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#6B6B7E" text-anchor="middle" letter-spacing="0.5">Spec-driven, context-engineered AI development methodology</text>
+
+  <!-- Tags -->
+  <g transform="translate(218, 240)">
+    <!-- Multi-LLM tag -->
+    <rect x="0" y="0" width="105" height="26" rx="13" fill="#7B2D8E" opacity="0.2" stroke="#7B2D8E" stroke-width="0.8"/>
+    <text x="52" y="17" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#C77DDB" text-anchor="middle" font-weight="600">Multi-LLM</text>
+
+    <!-- Agent Skills tag -->
+    <rect x="120" y="0" width="120" height="26" rx="13" fill="#FF6D00" opacity="0.15" stroke="#FF6D00" stroke-width="0.8"/>
+    <text x="180" y="17" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#FFB74D" text-anchor="middle" font-weight="600">Agent Skills</text>
+
+    <!-- Cross-platform tag -->
+    <rect x="255" y="0" width="130" height="26" rx="13" fill="#00C853" opacity="0.15" stroke="#00C853" stroke-width="0.8"/>
+    <text x="320" y="17" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#69F0AE" text-anchor="middle" font-weight="600">Cross-Platform</text>
+
+    <!-- Open Source tag -->
+    <rect x="400" y="0" width="120" height="26" rx="13" fill="#2196F3" opacity="0.15" stroke="#2196F3" stroke-width="0.8"/>
+    <text x="460" y="17" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#64B5F6" text-anchor="middle" font-weight="600">Open Source</text>
+  </g>
+
+  <!-- Accent line bottom -->
+  <rect x="0" y="297" width="900" height="3" fill="url(#accent)" rx="1.5"/>
+</svg>

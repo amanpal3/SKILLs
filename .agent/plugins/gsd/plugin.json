@@ -1,0 +1,6 @@
+{
+  "name": "gsd",
+  "displayName": "Get Shit Done (GSD)",
+  "version": "1.0.0",
+  "description": "Spec-driven development workflow with planning locks, state persistence, wave-based execution, and empirical verification."
+}

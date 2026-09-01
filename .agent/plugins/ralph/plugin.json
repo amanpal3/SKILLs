@@ -1,0 +1,5 @@
+﻿{
+    "description":  "Ralph autonomous build loop and deterministic PRD execution engine for Antigravity",
+    "name":  "ralph",
+    "version":  "1.0.0"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "ralph-loop",
+  "displayName": "Ralph Autonomous Build Loop",
+  "version": "1.0.0",
+  "description": "Deterministic story execution loop based on structured PRD JSON, browser DOM verification, and atomic progress logging."
+}

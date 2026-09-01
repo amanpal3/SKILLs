@@ -1,0 +1,6 @@
+{
+  "name": "unified-build-pipeline",
+  "displayName": "Unified Autonomous Build Pipeline",
+  "version": "1.0.0",
+  "description": "Integrated autonomous pipeline combining GSD spec engineering, Ralph deterministic build loops, and CodeRabbit quality gates."
+}
