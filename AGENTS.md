@@ -1,7 +1,17 @@
-# Agent instructions (this repo)
+# Universal Agent Instructions
 
-**Canonical rules:** Read and follow [`CLAUDE.md`](CLAUDE.md) — project overview, skill-loading rules, constraints, and the full skill directory.
+**Canonical rules:** Read and follow [`CLAUDE.md`](CLAUDE.md) for full project constraints and directory layout.
 
-**On each task:** When the user’s request matches a skill’s domain, read `.agent/skills/<skill-name>/SKILL.md` before doing that work. Load only relevant skills; do not preload every skill. If a task spans domains, apply skills in sequence.
+## Token-Optimized 8-Tier Dispatcher
+On every task, match user intent against this hierarchy to prevent token waste:
 
-**Skill index:** See the “Skill Directory” and “Skill Loading Logic” sections in `CLAUDE.md`.
+1. **? Micro-Fix / Typo:** Direct inline fix (0 skill files read � preserve context).
+2. **?? Small task / Refactor:** `ponytail` + 1 relevant domain specialist.
+3. **?? Library Docs / Syntax:** `context7-mcp` (fetches live versioned docs, zero web bloat).
+4. **?? Exploring New Feature:** `brainstorming-ideas` --? `planning-strategy` (convergent choices).
+5. **?? Multi-File / Stateful:** `gsd` suite (isolated task context waves + checkpointing).
+6. **?? Structured User Stories:** `ralph-prd` --? `ralph-loop` (deterministic execution + quality gates).
+7. **?? Full Mission-Critical:** `unified-build-pipeline` (GSD specs + Ralph loop + CodeRabbit review).
+8. **?? Explicit Squad Task:** `antigravity-agents` (multi-agent concurrent orchestration).
+
+Never load multiple conflicting skills at once. Apply skills in clean, sequential phases.

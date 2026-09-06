@@ -19,6 +19,35 @@ param(
 $GlobalStore = "$env:USERPROFILE\.gemini\global-skills"
 $SkillsSubdir = ".agent\skills"
 
+# Security & Execution Safety Controls
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+function Assert-SafePath {
+    param([string]$Path)
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        throw "Path cannot be null or empty."
+    }
+    $resolved = Resolve-Path $Path -ErrorAction SilentlyContinue
+    $cleanPath = if ($resolved) { $resolved.Path } else { [System.IO.Path]::GetFullPath($Path) }
+
+    $dangerousPaths = @(
+        $env:SystemRoot,
+        "$env:SystemDrive\",
+        "$env:SystemDrive",
+        "$env:SystemDrive\Windows",
+        "$env:ProgramFiles",
+        "${env:ProgramFiles(x86)}"
+    )
+
+    foreach ($dp in $dangerousPaths) {
+        if ($dp -and ($cleanPath.TrimEnd('\') -eq $dp.TrimEnd('\'))) {
+            throw "Security Block: Target path '$cleanPath' matches protected system directory '$dp'."
+        }
+    }
+    return $cleanPath
+}
+
 function Write-Banner {
     param([string]$msg)
     Write-Host ""
@@ -38,6 +67,7 @@ if ($Action -eq "store") {
     $SourcePlugins = Join-Path $PSScriptRoot ".agent\plugins"
     $SourceClaude = Join-Path $PSScriptRoot "CLAUDE.md"
     $SourceAgents = Join-Path $PSScriptRoot "AGENTS.md"
+    $SourceCodex = Join-Path $PSScriptRoot "CODEX.md"
     $SourcePonytail = Join-Path $PSScriptRoot "PONYTAIL.md"
     $SourceBackend = Join-Path $PSScriptRoot "backend.md"
 
@@ -57,12 +87,36 @@ if ($Action -eq "store") {
     Copy-Item $SourceSkills -Destination $SkillsDest -Recurse -Force
     Write-Host "[OK] Skills copied to $SkillsDest" -ForegroundColor Green
 
+    # Also sync ~/.agent/skills
+    $AgentSkillsDest = "$env:USERPROFILE\.agent\skills"
+    if (-not (Test-Path $AgentSkillsDest)) { New-Item -ItemType Directory -Path $AgentSkillsDest -Force | Out-Null }
+    Copy-Item -Recurse -Force "$SourceSkills\*" $AgentSkillsDest
+    Write-Host "[OK] Skills synced to $AgentSkillsDest" -ForegroundColor Green
+
+    # Also sync ~/.codex/skills
+    $CodexSkillsDest = "$env:USERPROFILE\.codex\skills"
+    if (-not (Test-Path $CodexSkillsDest)) { New-Item -ItemType Directory -Path $CodexSkillsDest -Force | Out-Null }
+    Copy-Item -Recurse -Force "$SourceSkills\*" $CodexSkillsDest
+    Write-Host "[OK] Skills synced to $CodexSkillsDest" -ForegroundColor Green
+
+    # Also sync ~/.agents/skills
+    $AgentsSkillsDest = "$env:USERPROFILE\.agents\skills"
+    if (-not (Test-Path $AgentsSkillsDest)) { New-Item -ItemType Directory -Path $AgentsSkillsDest -Force | Out-Null }
+    Copy-Item -Recurse -Force "$SourceSkills\*" $AgentsSkillsDest
+    Write-Host "[OK] Skills synced to $AgentsSkillsDest" -ForegroundColor Green
+
     # Copy plugins
     if (Test-Path $SourcePlugins) {
         $PluginsDest = Join-Path $GlobalStore "plugins"
         if (Test-Path $PluginsDest) { Remove-Item $PluginsDest -Recurse -Force }
         Copy-Item $SourcePlugins -Destination $PluginsDest -Recurse -Force
         Write-Host "[OK] Plugins copied to $PluginsDest" -ForegroundColor Green
+
+        # Also sync ~/.agent/plugins
+        $AgentPluginsDest = "$env:USERPROFILE\.agent\plugins"
+        if (-not (Test-Path $AgentPluginsDest)) { New-Item -ItemType Directory -Path $AgentPluginsDest -Force | Out-Null }
+        Copy-Item -Recurse -Force "$SourcePlugins\*" $AgentPluginsDest
+        Write-Host "[OK] Plugins synced to $AgentPluginsDest" -ForegroundColor Green
     }
 
     # Copy CLAUDE.md
@@ -75,6 +129,12 @@ if ($Action -eq "store") {
     if (Test-Path $SourceAgents) {
         Copy-Item $SourceAgents -Destination (Join-Path $GlobalStore "AGENTS.md") -Force
         Write-Host "[OK] AGENTS.md copied" -ForegroundColor Green
+    }
+
+    # Copy CODEX.md
+    if (Test-Path $SourceCodex) {
+        Copy-Item $SourceCodex -Destination (Join-Path $GlobalStore "CODEX.md") -Force
+        Write-Host "[OK] CODEX.md copied" -ForegroundColor Green
     }
 
     # Copy PONYTAIL.md
@@ -126,12 +186,12 @@ if ($Action -eq "install") {
     $SourcePlugins = Join-Path $GlobalStore "plugins"
     $SourceClaude = Join-Path $GlobalStore "CLAUDE.md"
     $SourceAgents = Join-Path $GlobalStore "AGENTS.md"
+    $SourceCodex = Join-Path $GlobalStore "CODEX.md"
     $SourcePonytail = Join-Path $GlobalStore "PONYTAIL.md"
     $SourceBackend = Join-Path $GlobalStore "backend.md"
 
-    # Resolve target
-    $resolved = Resolve-Path $TargetPath -ErrorAction SilentlyContinue
-    if ($resolved) { $TargetPath = $resolved.Path }
+    # Validate and resolve target path safely
+    $TargetPath = Assert-SafePath $TargetPath
     Write-Host "Target: $TargetPath" -ForegroundColor Yellow
 
     # Create .agent/skills/ in target
@@ -172,6 +232,10 @@ if ($Action -eq "install") {
     if (Test-Path $SourceAgents) {
         Copy-Item $SourceAgents -Destination (Join-Path $TargetPath "AGENTS.md") -Force
         Write-Host "  [+] AGENTS.md" -ForegroundColor Green
+    }
+    if (Test-Path $SourceCodex) {
+        Copy-Item $SourceCodex -Destination (Join-Path $TargetPath "CODEX.md") -Force
+        Write-Host "  [+] CODEX.md" -ForegroundColor Green
     }
     if (Test-Path $SourcePonytail) {
         Copy-Item $SourcePonytail -Destination (Join-Path $TargetPath "PONYTAIL.md") -Force

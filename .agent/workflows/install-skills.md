@@ -8,16 +8,16 @@ This workflow copies all stored skills from `~/.gemini/global-skills/` into a ta
 
 ## Prerequisites
 - Skills must first be stored globally using the `store` command (already done).
-- Global store location: `C:\Users\amanp\.gemini\global-skills\`
+- Global store location: `~/.gemini/global-skills/`
 
 ## Steps
 
 ### Option A: Install into current project directory
 // turbo
-1. Run: `powershell -ExecutionPolicy Bypass -File "C:\Users\amanp\.gemini\global-skills\install-skills.ps1" install`
+1. Run: `powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.gemini\global-skills\install-skills.ps1" install`
 
 ### Option B: Install into a specific project
-1. Run: `powershell -ExecutionPolicy Bypass -File "C:\Users\amanp\.gemini\global-skills\install-skills.ps1" install -TargetPath "C:\path\to\your\project"`
+1. Run: `powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.gemini\global-skills\install-skills.ps1" install -TargetPath "C:\path\to\your\project"`
 
 ### Option C: Update the global store (after adding new skills)
 1. Navigate to the project with your latest skills

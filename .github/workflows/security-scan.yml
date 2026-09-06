@@ -1,0 +1,43 @@
+name: Security & Secret Scan Shield
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    name: Gitleaks Secret Scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks Secret Detection
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_SUMMARY: true
+
+  path-safety-lint:
+    name: Path Safety & Integrity Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Audit for Forbidden Hardcoded Paths
+        run: |
+          echo "Checking for sensitive absolute paths in repository..."
+          if grep -rnw "C:\\Users\\" . --exclude-dir=".git" ; then
+            echo "ERROR: Hardcoded local Windows user paths detected!"
+            exit 1
+          fi
+          echo "No sensitive local paths found."

@@ -40,28 +40,25 @@ All skills live in: `.agent/skills/`
 | **GTM Strategy**            | `gtm-strategy/`            | Product launches, positioning docs, ICP research, outreach sequences, competitive intelligence       |
 | **Antigravity Agents**      | `antigravity-agents/`      | Multi-agent orchestration for complex projects — squads of specialized AI agents working in parallel |
 | **Ponytail**                | `ponytail/`                | Enforcing the simplest, minimal solution, YAGNI, cutting bloat/dependencies, or lazy mode            |
+| **Context7 MCP**            | `context7-mcp/`            | Fetching up-to-date, version-specific library docs and code examples directly via Context7 MCP       |
+| **Integrating Sentry**     | `integrating-sentry/`      | Configuring Sentry error tracking, distributed tracing, DSNs, and alerting across platforms          |
+| **Using Codex CLI**         | `using-codex-cli/`         | Orchestrating Codex CLI for autonomous execution, reviews, and cross-agent workflows                 |
 
 ---
 
-## Skill Loading Logic
+## Skill Loading Logic (Token-Optimized 8-Tier Dispatcher)
 
 ```
-User Request
+User Prompt
     │
-    ├── Is this a design task?          → Load: ui-ux-pro-max + designing-with-stitch
-    ├── Is this a security task?        → Load: owasp-security
-    ├── Is this a code review?          → Load: code-review
-    ├── Is this a new feature/product?  → Load: planning-strategy → brainstorming-ideas
-    ├── Is this Firebase-related?       → Load: managing-firebase
-    ├── Is this SEO/content?            → Load: seo-optimizer
-    ├── Is this video/animation?        → Load: using-remotion
-    ├── Is this error handling?         → Load: error-handling-patterns
-    ├── Is this a new skill request?    → Load: creating-skills
-    ├── Is this branding/UI copy?       → Load: brand-identity
-    ├── Is this a PRD/ticket/sprint?    → Load: project-management
-    ├── Is this a launch/ICP/outreach?  → Load: gtm-strategy
-    ├── Is this multi-agent/squad work?  → Load: antigravity-agents
-    └── Is this minimal/lazy code/YAGNI? → Load: ponytail
+    ├── ⚡ 1. Micro-Fix / Typo          ──► Direct inline fix (0 skill files read)
+    ├── 🪓 2. Small task / Refactor     ──► ponytail + 1 domain specialist
+    ├── 📚 3. Library Docs / Syntax     ──► context7-mcp (Prevents hallucination & web bloat)
+    ├── 💡 4. Exploring New Feature     ──► brainstorming-ideas ──► planning-strategy
+    ├── 🔄 5. Multi-File / Stateful     ──► gsd suite (Isolated context waves)
+    ├── 📋 6. Structured User Stories   ──► ralph-prd ──► ralph-loop
+    ├── 🚀 7. Full Mission-Critical     ──► unified-build-pipeline (GSD + Ralph + CodeRabbit)
+    └── 👥 8. Explicit Squad Task       ──► antigravity-agents
 ```
 
 ---
@@ -72,6 +69,7 @@ User Request
 - **No over-engineering** — Match the solution complexity to the problem size.
 - **No magic numbers or hardcoded secrets** — Always use constants and environment variables.
 - **No skipping error handling** — Every external call must handle failures.
+- **Always use Sentry** — Instrument Sentry for error tracking, exception capture, and observability across applications and services.
 - **No shipping without a checklist** — Use the relevant skill's review/audit checklist before marking work as done.
 - **Forward slashes in all paths** — Use `/` not `\` in all file references.
 
@@ -106,6 +104,9 @@ User Request
     ├── project-management/    → PRDs, tickets, sprints, roadmaps
     ├── gtm-strategy/          → Launch plans, ICP, outreach, positioning
     ├── antigravity-agents/    → Multi-agent squads for complex projects
+    ├── using-codex-cli/       → Codex CLI autonomous execution & workflows
+    ├── context7-mcp/          → Real-time library docs & code examples
+    ├── integrating-sentry/    → Sentry error tracking & APM
     └── ponytail/              → Minimal/lazy solution, YAGNI & anti-bloat
 CLAUDE.md                      ← You are here
 ```
