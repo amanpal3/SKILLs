@@ -34,46 +34,55 @@ cd SKILLs
 Run the automated installer to sync all skills, plugins, and instructions into your global user directories:
 
 ```powershell
-# In PowerShell:
-.\install-skills.ps1 store
+# In PowerShell (ExecutionPolicy Bypass ensures Windows doesn't block the script):
+powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 store
 ```
 
 Or on standard Windows CMD:
 ```cmd
-install-skills.bat
+install-skills.bat store
 ```
 
 > [!TIP]
 > **What `store` does automatically:**
-> 1. Syncs all 43 skills to `~/.gemini/global-skills/skills/` (Google Antigravity)
-> 2. Syncs all 43 skills to `~/.agent/skills/` (Universal Agent standard)
-> 3. Syncs all 43 skills to `~/.codex/skills/` (OpenAI Codex CLI)
-> 4. Syncs all 43 skills to `~/.agents/skills/` (Cross-agent fallback)
-> 5. Deploys all 6 plugins (`coderabbit`, `gsd`, `ponytail`, `ralph`, `ralph-loop`, `unified-build-pipeline`)
-> 6. Synchronizes `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, and `manifest.json`
-
-Once run, you can open **any directory or repository** on your system and your AI agents will automatically have access to every skill!
+> 1. Syncs all 43 skills directly to `~/.gemini/config/skills/` (Google Antigravity Native Global Discovery)
+> 2. Syncs all 6 plugins directly to `~/.gemini/config/plugins/` (Google Antigravity Native Global Plugins)
+> 3. Syncs global rules to `~/.gemini/config/rules/` and `~/.gemini/GEMINI.md`
+> 4. Syncs all 43 skills to `~/.agent/skills/` and `~/.agents/skills/` (Universal Agent standards)
+> 5. Syncs all 43 skills to `~/.codex/skills/` (OpenAI Codex CLI)
+> 6. Synchronizes `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `GEMINI.md`, workflows, and `manifest.json` to `~/.gemini/global-skills/`
+>
+> **Progressive Disclosure Note:** In Google Antigravity, skills are indexed dynamically and loaded on-demand when relevant tasks are requested, preserving your token budget rather than dumping all skills into the prompt upfront.
 
 ---
 
 ## 🚀 Installing Skills into a Specific Project
 
-If you want to inject the skills and instructions directly into an existing project or new repository:
+If you want to inject the skills and instructions directly into an existing project or new repository (e.g. to commit `.agent/` into your team's Git repo):
 
 ```powershell
 # Install into the current project directory:
-.\install-skills.ps1 install
+powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 install
 
 # Or install into a specific target directory:
-.\install-skills.ps1 install -TargetPath "C:\Projects\my-new-app"
+powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 install -TargetPath "C:\Projects\my-new-app"
+```
+
+Or on standard Windows CMD:
+```cmd
+install-skills.bat install
+# Or:
+install-skills.bat install "C:\Projects\my-new-app"
 ```
 
 This will copy:
 - `.agent/skills/` (All 43 modular domain skills)
 - `.agent/plugins/` (All 6 autonomous plugins)
+- `.agent/workflows/` (Autonomous workflows & runbooks)
+- `GEMINI.md` (Native Google Antigravity rules & instructions)
+- `AGENTS.md` (Universal multi-agent instructions)
 - `CLAUDE.md` (Master instructions for Claude Code & Cursor)
 - `CODEX.md` (Master instructions for OpenAI Codex CLI)
-- `AGENTS.md` (Universal multi-agent instructions)
 - `PONYTAIL.md` & `backend.md` (Architectural rules)
 
 ---

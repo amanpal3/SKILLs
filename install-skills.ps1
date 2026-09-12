@@ -17,6 +17,7 @@ param(
 )
 
 $GlobalStore = "$env:USERPROFILE\.gemini\global-skills"
+$GeminiConfig = "$env:USERPROFILE\.gemini\config"
 $SkillsSubdir = ".agent\skills"
 
 # Security & Execution Safety Controls
@@ -58,13 +59,15 @@ function Write-Banner {
 }
 
 # ----------------------------------------------------------
-# STORE: Copy skills from current project → global store
+# STORE: Copy skills from current project → global store & Antigravity config
 # ----------------------------------------------------------
 if ($Action -eq "store") {
-    Write-Banner "STORING skills to global store"
+    Write-Banner "STORING skills to global store & Antigravity config"
 
     $SourceSkills = Join-Path $PSScriptRoot ".agent\skills"
     $SourcePlugins = Join-Path $PSScriptRoot ".agent\plugins"
+    $SourceWorkflows = Join-Path $PSScriptRoot ".agent\workflows"
+    $SourceGemini = Join-Path $PSScriptRoot "GEMINI.md"
     $SourceClaude = Join-Path $PSScriptRoot "CLAUDE.md"
     $SourceAgents = Join-Path $PSScriptRoot "AGENTS.md"
     $SourceCodex = Join-Path $PSScriptRoot "CODEX.md"
@@ -76,47 +79,86 @@ if ($Action -eq "store") {
         exit 1
     }
 
-    # Create global store
+    # 1. Create global store
     if (-not (Test-Path $GlobalStore)) {
         New-Item -ItemType Directory -Path $GlobalStore -Force | Out-Null
     }
 
-    # Copy skills
+    # 2. Copy skills to Global Store
     $SkillsDest = Join-Path $GlobalStore "skills"
     if (Test-Path $SkillsDest) { Remove-Item $SkillsDest -Recurse -Force }
     Copy-Item $SourceSkills -Destination $SkillsDest -Recurse -Force
     Write-Host "[OK] Skills copied to $SkillsDest" -ForegroundColor Green
 
-    # Also sync ~/.agent/skills
+    # 3. Antigravity Global Discovery: ~/.gemini/config/skills
+    $GeminiSkillsDest = Join-Path $GeminiConfig "skills"
+    if (-not (Test-Path $GeminiSkillsDest)) { New-Item -ItemType Directory -Path $GeminiSkillsDest -Force | Out-Null }
+    Copy-Item -Recurse -Force "$SourceSkills\*" $GeminiSkillsDest
+    Write-Host "[OK] Skills synced to Antigravity global config ($GeminiSkillsDest)" -ForegroundColor Green
+
+    # 4. Also sync ~/.agent/skills (Universal Agent standard)
     $AgentSkillsDest = "$env:USERPROFILE\.agent\skills"
     if (-not (Test-Path $AgentSkillsDest)) { New-Item -ItemType Directory -Path $AgentSkillsDest -Force | Out-Null }
     Copy-Item -Recurse -Force "$SourceSkills\*" $AgentSkillsDest
     Write-Host "[OK] Skills synced to $AgentSkillsDest" -ForegroundColor Green
 
-    # Also sync ~/.codex/skills
+    # 5. Also sync ~/.codex/skills (OpenAI Codex CLI)
     $CodexSkillsDest = "$env:USERPROFILE\.codex\skills"
     if (-not (Test-Path $CodexSkillsDest)) { New-Item -ItemType Directory -Path $CodexSkillsDest -Force | Out-Null }
     Copy-Item -Recurse -Force "$SourceSkills\*" $CodexSkillsDest
     Write-Host "[OK] Skills synced to $CodexSkillsDest" -ForegroundColor Green
 
-    # Also sync ~/.agents/skills
+    # 6. Also sync ~/.agents/skills (Cross-agent fallback)
     $AgentsSkillsDest = "$env:USERPROFILE\.agents\skills"
     if (-not (Test-Path $AgentsSkillsDest)) { New-Item -ItemType Directory -Path $AgentsSkillsDest -Force | Out-Null }
     Copy-Item -Recurse -Force "$SourceSkills\*" $AgentsSkillsDest
     Write-Host "[OK] Skills synced to $AgentsSkillsDest" -ForegroundColor Green
 
-    # Copy plugins
+    # 7. Copy plugins
     if (Test-Path $SourcePlugins) {
         $PluginsDest = Join-Path $GlobalStore "plugins"
         if (Test-Path $PluginsDest) { Remove-Item $PluginsDest -Recurse -Force }
         Copy-Item $SourcePlugins -Destination $PluginsDest -Recurse -Force
         Write-Host "[OK] Plugins copied to $PluginsDest" -ForegroundColor Green
 
+        # Antigravity Global Discovery: ~/.gemini/config/plugins
+        $GeminiPluginsDest = Join-Path $GeminiConfig "plugins"
+        if (-not (Test-Path $GeminiPluginsDest)) { New-Item -ItemType Directory -Path $GeminiPluginsDest -Force | Out-Null }
+        Copy-Item -Recurse -Force "$SourcePlugins\*" $GeminiPluginsDest
+        Write-Host "[OK] Plugins synced to Antigravity global config ($GeminiPluginsDest)" -ForegroundColor Green
+
         # Also sync ~/.agent/plugins
         $AgentPluginsDest = "$env:USERPROFILE\.agent\plugins"
         if (-not (Test-Path $AgentPluginsDest)) { New-Item -ItemType Directory -Path $AgentPluginsDest -Force | Out-Null }
         Copy-Item -Recurse -Force "$SourcePlugins\*" $AgentPluginsDest
         Write-Host "[OK] Plugins synced to $AgentPluginsDest" -ForegroundColor Green
+    }
+
+    # 8. Copy workflows
+    if (Test-Path $SourceWorkflows) {
+        $WorkflowsDest = Join-Path $GlobalStore "workflows"
+        if (Test-Path $WorkflowsDest) { Remove-Item $WorkflowsDest -Recurse -Force }
+        Copy-Item $SourceWorkflows -Destination $WorkflowsDest -Recurse -Force
+        Write-Host "[OK] Workflows copied to $WorkflowsDest" -ForegroundColor Green
+
+        $AgentWorkflowsDest = "$env:USERPROFILE\.agent\workflows"
+        if (-not (Test-Path $AgentWorkflowsDest)) { New-Item -ItemType Directory -Path $AgentWorkflowsDest -Force | Out-Null }
+        Copy-Item -Recurse -Force "$SourceWorkflows\*" $AgentWorkflowsDest
+        Write-Host "[OK] Workflows synced to $AgentWorkflowsDest" -ForegroundColor Green
+    }
+
+    # 9. Copy GEMINI.md & rules
+    $GeminiRulesDest = Join-Path $GeminiConfig "rules"
+    if (-not (Test-Path $GeminiRulesDest)) { New-Item -ItemType Directory -Path $GeminiRulesDest -Force | Out-Null }
+
+    if (Test-Path $SourceGemini) {
+        Copy-Item $SourceGemini -Destination (Join-Path $GlobalStore "GEMINI.md") -Force
+        Copy-Item $SourceGemini -Destination (Join-Path $GeminiRulesDest "GEMINI.md") -Force
+        Write-Host "[OK] GEMINI.md copied & synced to Antigravity rules" -ForegroundColor Green
+    } elseif (Test-Path $SourceAgents) {
+        Copy-Item $SourceAgents -Destination (Join-Path $GlobalStore "GEMINI.md") -Force
+        Copy-Item $SourceAgents -Destination (Join-Path $GeminiRulesDest "GEMINI.md") -Force
+        Write-Host "[OK] GEMINI.md generated from AGENTS.md for Antigravity" -ForegroundColor Green
     }
 
     # Copy CLAUDE.md
@@ -156,17 +198,18 @@ if ($Action -eq "store") {
         $pluginNames = Get-ChildItem (Join-Path $GlobalStore "plugins") -Directory | Select-Object -ExpandProperty Name
     }
     $manifest = @{
-        storedAt    = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
-        source      = $PSScriptRoot
-        skillCount  = $skills.Count
-        skills      = $skills
-        pluginCount = $pluginNames.Count
-        plugins     = $pluginNames
+        storedAt        = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+        source          = $PSScriptRoot
+        skillCount      = $skills.Count
+        skills          = $skills
+        pluginCount     = $pluginNames.Count
+        plugins         = $pluginNames
+        antigravityPath = $GeminiConfig
     }
     $manifest | ConvertTo-Json -Depth 3 | Set-Content (Join-Path $GlobalStore "manifest.json")
     Write-Host "[OK] Manifest created ($($skills.Count) skills, $($pluginNames.Count) plugins)" -ForegroundColor Green
 
-    $countMsg = "DONE -- " + $skills.Count + " skills and " + $pluginNames.Count + " plugins stored globally"
+    $countMsg = "DONE -- " + $skills.Count + " skills and " + $pluginNames.Count + " plugins stored globally across Antigravity and Agent paths"
     Write-Banner $countMsg
 }
 
@@ -184,6 +227,8 @@ if ($Action -eq "install") {
 
     $SourceSkills = Join-Path $GlobalStore "skills"
     $SourcePlugins = Join-Path $GlobalStore "plugins"
+    $SourceWorkflows = Join-Path $GlobalStore "workflows"
+    $SourceGemini = Join-Path $GlobalStore "GEMINI.md"
     $SourceClaude = Join-Path $GlobalStore "CLAUDE.md"
     $SourceAgents = Join-Path $GlobalStore "AGENTS.md"
     $SourceCodex = Join-Path $GlobalStore "CODEX.md"
@@ -224,7 +269,24 @@ if ($Action -eq "install") {
         }
     }
 
+    # Copy workflows if present
+    if (Test-Path $SourceWorkflows) {
+        $TargetWorkflows = Join-Path $TargetPath ".agent\workflows"
+        if (-not (Test-Path $TargetWorkflows)) {
+            New-Item -ItemType Directory -Path $TargetWorkflows -Force | Out-Null
+        }
+        Get-ChildItem $SourceWorkflows -File | ForEach-Object {
+            $dest = Join-Path $TargetWorkflows $_.Name
+            Copy-Item $_.FullName -Destination $dest -Force
+            Write-Host "  [+] Workflow: $($_.Name)" -ForegroundColor Green
+        }
+    }
+
     # Copy config files
+    if (Test-Path $SourceGemini) {
+        Copy-Item $SourceGemini -Destination (Join-Path $TargetPath "GEMINI.md") -Force
+        Write-Host "  [+] GEMINI.md" -ForegroundColor Green
+    }
     if (Test-Path $SourceClaude) {
         Copy-Item $SourceClaude -Destination (Join-Path $TargetPath "CLAUDE.md") -Force
         Write-Host "  [+] CLAUDE.md" -ForegroundColor Green
