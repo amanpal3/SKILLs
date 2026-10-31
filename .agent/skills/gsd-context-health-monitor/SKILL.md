@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-context-health-monitor
 description: Monitors context complexity and triggers state dumps before quality degrades
 ---

@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "allowed_tools": [
+    "view_file",
+    "run_command (read-only / test)",
+    "search_web",
+    "read_url_content",
+    "call_mcp_tool (shadcn, context7, 21st, chrome-devtools, playwright)",
+    "invoke_subagent (sandboxed)",
+    "ask_question",
+    "archify",
+    "graphify"
+  ],
+  "conditions": {
+    "execution_boundary": "Must remain within current project directory",
+    "environment_access": "Zero access to process.env secrets without explicit masking"
+  }
+}

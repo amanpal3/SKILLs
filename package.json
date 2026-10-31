@@ -1,0 +1,60 @@
+{
+  "name": "ai-skills-ecosystem",
+  "version": "2.1.0",
+  "description": "Universal AI Developer Agent Ecosystem providing modular skills, plugins, MCP servers, and multi-agent governance rules.",
+  "main": "security/index.js",
+  "bin": {
+    "ai-ecosystem": "./bin/ai-ecosystem.js",
+    "skills": "./bin/ai-ecosystem.js"
+  },
+  "scripts": {
+    "doctor": "node bin/ai-ecosystem.js doctor",
+    "install": "node bin/ai-ecosystem.js install all",
+    "update": "node bin/ai-ecosystem.js update",
+    "uninstall": "node bin/ai-ecosystem.js uninstall",
+    "test:security": "node --test tests/security/*.test.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "skills",
+    "mcp",
+    "antigravity",
+    "claude-code",
+    "codex",
+    "cursor",
+    "developer-tools",
+    "security-hardened"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "security/",
+    ".agent/skills/",
+    ".agent/plugins/",
+    ".agent/workflows/",
+    "manifest.json",
+    "mcp.json",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "CODEX.md",
+    "GEMINI.md",
+    "PONYTAIL.md",
+    "backend.md",
+    "DEFEND.md",
+    "ECOSYSTEM.md",
+    "PLUGINS_AND_MCP_README.md",
+    "SECURITY.md",
+    "SECURITY_AUDIT.md",
+    "install-skills.ps1",
+    "install-skills.bat",
+    "LICENSE",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

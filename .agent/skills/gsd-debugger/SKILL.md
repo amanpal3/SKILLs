@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-debugger
 description: Systematic debugging with persistent state and fresh context advantages
 ---

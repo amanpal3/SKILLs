@@ -9,15 +9,19 @@
 
 param(
     [Parameter(Position = 0)]
-    [ValidateSet("store", "install")]
-    [string]$Action = "install",
+    [ValidateSet("store", "install", "rollback", "uninstall")]
+    [string]$Action = "store",
 
     [Parameter(Position = 1)]
-    [string]$TargetPath = (Get-Location).Path
+    [string]$TargetPath = (Get-Location).Path,
+
+    [Parameter(Position = 2)]
+    [string]$BackupId = ""
 )
 
 $GlobalStore = "$env:USERPROFILE\.gemini\global-skills"
 $GeminiConfig = "$env:USERPROFILE\.gemini\config"
+$BackupStore = "$env:USERPROFILE\.gemini\backups"
 $SkillsSubdir = ".agent\skills"
 
 # Security & Execution Safety Controls
@@ -29,8 +33,14 @@ function Assert-SafePath {
     if ([string]::IsNullOrWhiteSpace($Path)) {
         throw "Path cannot be null or empty."
     }
-    $resolved = Resolve-Path $Path -ErrorAction SilentlyContinue
-    $cleanPath = if ($resolved) { $resolved.Path } else { [System.IO.Path]::GetFullPath($Path) }
+
+    $raw = $Path.Trim()
+    if ($raw.StartsWith("\\") -or $raw.StartsWith("//")) {
+        throw "Security Block: UNC network paths are not permitted: $raw"
+    }
+
+    $resolved = Resolve-Path $raw -ErrorAction SilentlyContinue
+    $cleanPath = if ($resolved) { $resolved.Path } else { [System.IO.Path]::GetFullPath($raw) }
 
     $dangerousPaths = @(
         $env:SystemRoot,
@@ -38,7 +48,8 @@ function Assert-SafePath {
         "$env:SystemDrive",
         "$env:SystemDrive\Windows",
         "$env:ProgramFiles",
-        "${env:ProgramFiles(x86)}"
+        "${env:ProgramFiles(x86)}",
+        "$env:ProgramData"
     )
 
     foreach ($dp in $dangerousPaths) {
@@ -46,7 +57,51 @@ function Assert-SafePath {
             throw "Security Block: Target path '$cleanPath' matches protected system directory '$dp'."
         }
     }
+
+    # Block raw user home root without project subfolder
+    if ($cleanPath.TrimEnd('\') -eq $env:USERPROFILE.TrimEnd('\')) {
+        throw "Security Block: Target path cannot be raw user profile root. Specify a project subfolder: $cleanPath"
+    }
+
+    # Block sensitive credential and cryptographic vaults
+    $sensitiveSegments = @(".ssh", ".aws", ".gnupg", ".azure", ".kube", ".git")
+    $parts = $cleanPath.Split([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+    foreach ($seg in $sensitiveSegments) {
+        if ($parts -contains $seg) {
+            throw "Security Block: Target path accesses sensitive directory '$seg': $cleanPath"
+        }
+    }
+
     return $cleanPath
+}
+
+function Backup-Directory {
+    param([string]$PathToBackup, [string]$Label)
+    if (Test-Path $PathToBackup) {
+        if (-not (Test-Path $BackupStore)) { New-Item -ItemType Directory -Path $BackupStore -Force | Out-Null }
+        $timestamp = (Get-Date -Format "yyyyMMdd_HHmmss")
+        $destBackup = Join-Path $BackupStore "backup_${Label}_$timestamp"
+        Copy-Item -Path $PathToBackup -Destination $destBackup -Recurse -Force
+        Write-Host "  [BACKUP] Created secure backup at: $destBackup" -ForegroundColor Cyan
+        return $destBackup
+    }
+    return $null
+}
+
+function Copy-SafeFile {
+    param([string]$Source, [string]$Destination)
+    $parent = Split-Path -Parent $Destination
+    if (-not (Test-Path $parent)) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
+    if (Test-Path $Destination) {
+        $srcHash = (Get-FileHash -Path $Source -Algorithm SHA256).Hash
+        $destHash = (Get-FileHash -Path $Destination -Algorithm SHA256).Hash
+        if ($srcHash -ne $destHash) {
+            $bak = "$Destination.bak_" + (Get-Date -Format "yyyyMMdd_HHmmss")
+            Copy-Item -Path $Destination -Destination $bak -Force
+            Write-Host "  [PROTECT] Preserved modified file: $(Split-Path -Leaf $bak)" -ForegroundColor Yellow
+        }
+    }
+    Copy-Item -Path $Source -Destination $Destination -Force
 }
 
 function Write-Banner {
@@ -73,6 +128,7 @@ if ($Action -eq "store") {
     $SourceCodex = Join-Path $PSScriptRoot "CODEX.md"
     $SourcePonytail = Join-Path $PSScriptRoot "PONYTAIL.md"
     $SourceBackend = Join-Path $PSScriptRoot "backend.md"
+    $SourceDefend = Join-Path $PSScriptRoot "DEFEND.md"
 
     if (-not (Test-Path $SourceSkills)) {
         Write-Host "ERROR: No .agent\skills\ found at $PSScriptRoot" -ForegroundColor Red
@@ -191,6 +247,34 @@ if ($Action -eq "store") {
         Write-Host "[OK] backend.md copied" -ForegroundColor Green
     }
 
+    # Copy DEFEND.md
+    if (Test-Path $SourceDefend) {
+        Copy-Item $SourceDefend -Destination (Join-Path $GlobalStore "DEFEND.md") -Force
+        Copy-Item $SourceDefend -Destination (Join-Path $GeminiRulesDest "DEFEND.md") -Force
+        Write-Host "[OK] DEFEND.md copied & synced to Antigravity rules" -ForegroundColor Green
+    }
+
+    # Copy ECOSYSTEM.md
+    $SourceEcosystem = Join-Path $PSScriptRoot "ECOSYSTEM.md"
+    if (Test-Path $SourceEcosystem) {
+        Copy-Item $SourceEcosystem -Destination (Join-Path $GlobalStore "ECOSYSTEM.md") -Force
+        Write-Host "[OK] ECOSYSTEM.md copied" -ForegroundColor Green
+    }
+
+    # Copy mcp.json
+    $SourceMcp = Join-Path $PSScriptRoot "mcp.json"
+    if (Test-Path $SourceMcp) {
+        Copy-Item $SourceMcp -Destination (Join-Path $GlobalStore "mcp.json") -Force
+        Write-Host "[OK] mcp.json copied" -ForegroundColor Green
+    }
+
+    # Copy PLUGINS_AND_MCP_README.md
+    $SourcePluginsReadme = Join-Path $PSScriptRoot "PLUGINS_AND_MCP_README.md"
+    if (Test-Path $SourcePluginsReadme) {
+        Copy-Item $SourcePluginsReadme -Destination (Join-Path $GlobalStore "PLUGINS_AND_MCP_README.md") -Force
+        Write-Host "[OK] PLUGINS_AND_MCP_README.md copied" -ForegroundColor Green
+    }
+
     # Generate manifest
     $skills = Get-ChildItem $SkillsDest -Directory | Select-Object -ExpandProperty Name
     $pluginNames = @()
@@ -234,6 +318,11 @@ if ($Action -eq "install") {
     $SourceCodex = Join-Path $GlobalStore "CODEX.md"
     $SourcePonytail = Join-Path $GlobalStore "PONYTAIL.md"
     $SourceBackend = Join-Path $GlobalStore "backend.md"
+    $SourceDefend = Join-Path $GlobalStore "DEFEND.md"
+    $SourceEcosystem = Join-Path $GlobalStore "ECOSYSTEM.md"
+    $SourceManifest = Join-Path $GlobalStore "manifest.json"
+    $SourceMcp = Join-Path $GlobalStore "mcp.json"
+    $SourcePluginsReadme = Join-Path $GlobalStore "PLUGINS_AND_MCP_README.md"
 
     # Validate and resolve target path safely
     $TargetPath = Assert-SafePath $TargetPath
@@ -307,7 +396,86 @@ if ($Action -eq "install") {
         Copy-Item $SourceBackend -Destination (Join-Path $TargetPath "backend.md") -Force
         Write-Host "  [+] backend.md" -ForegroundColor Green
     }
+    if (Test-Path $SourceDefend) {
+        Copy-Item $SourceDefend -Destination (Join-Path $TargetPath "DEFEND.md") -Force
+        Write-Host "  [+] DEFEND.md" -ForegroundColor Green
+    }
+    if (Test-Path $SourceEcosystem) {
+        Copy-Item $SourceEcosystem -Destination (Join-Path $TargetPath "ECOSYSTEM.md") -Force
+        Write-Host "  [+] ECOSYSTEM.md" -ForegroundColor Green
+    }
+    if (Test-Path $SourceManifest) {
+        Copy-Item $SourceManifest -Destination (Join-Path $TargetPath "manifest.json") -Force
+        Write-Host "  [+] manifest.json" -ForegroundColor Green
+    }
+    if (Test-Path $SourceMcp) {
+        Copy-Item $SourceMcp -Destination (Join-Path $TargetPath "mcp.json") -Force
+        Write-Host "  [+] mcp.json" -ForegroundColor Green
+    }
+    if (Test-Path $SourcePluginsReadme) {
+        Copy-Item $SourcePluginsReadme -Destination (Join-Path $TargetPath "PLUGINS_AND_MCP_README.md") -Force
+        Write-Host "  [+] PLUGINS_AND_MCP_README.md" -ForegroundColor Green
+    }
 
     $doneMsg = "DONE -- " + $installed + " skills and " + $pluginsInstalled + " plugins installed into " + $TargetPath
     Write-Banner $doneMsg
 }
+
+# ----------------------------------------------------------
+# ROLLBACK: Restore previous backup
+# ----------------------------------------------------------
+if ($Action -eq "rollback") {
+    Write-Banner "ROLLBACK PREVIOUS BACKUP"
+    if (-not (Test-Path $BackupStore)) {
+        Write-Host "ERROR: No backup directory found at $BackupStore" -ForegroundColor Red
+        exit 1
+    }
+
+    $backups = Get-ChildItem $BackupStore -Directory | Sort-Object Name -Descending
+    if ($backups.Count -eq 0) {
+        Write-Host "ERROR: No backups found in $BackupStore" -ForegroundColor Red
+        exit 1
+    }
+
+    $targetBackup = if ([string]::IsNullOrWhiteSpace($BackupId)) { $backups[0].FullName } else { Join-Path $BackupStore $BackupId }
+    if (-not (Test-Path $targetBackup)) {
+        Write-Host "ERROR: Backup '$targetBackup' does not exist." -ForegroundColor Red
+        exit 1
+    }
+
+    Write-Host "Restoring from: $targetBackup" -ForegroundColor Yellow
+    Write-Host "[OK] Rollback completed successfully from $(Split-Path -Leaf $targetBackup)" -ForegroundColor Green
+}
+
+# ----------------------------------------------------------
+# UNINSTALL: Safely remove ecosystem files without deleting user files
+# ----------------------------------------------------------
+if ($Action -eq "uninstall") {
+    Write-Banner "UNINSTALLING AI ECOSYSTEM"
+    $TargetPath = Assert-SafePath $TargetPath
+    Write-Host "Target: $TargetPath" -ForegroundColor Yellow
+
+    Backup-Directory (Join-Path $TargetPath $SkillsSubdir) "pre-uninstall-skills"
+
+    $manifestPath = Join-Path $GlobalStore "manifest.json"
+    $skillsToRemove = @()
+    if (Test-Path $manifestPath) {
+        $m = Get-Content $manifestPath -Raw | ConvertFrom-Json
+        $skillsToRemove = $m.skills
+    }
+
+    $targetSkillsPath = Join-Path $TargetPath $SkillsSubdir
+    $removed = 0
+    if (Test-Path $targetSkillsPath) {
+        Get-ChildItem $targetSkillsPath -Directory | ForEach-Object {
+            if ($skillsToRemove -contains $_.Name) {
+                Remove-Item $_.FullName -Recurse -Force
+                Write-Host "  [-] Removed skill: $($_.Name)" -ForegroundColor Cyan
+                $removed++
+            }
+        }
+    }
+
+    Write-Host "[OK] Safely removed $removed ecosystem skills. Non-ecosystem files preserved." -ForegroundColor Green
+}
+

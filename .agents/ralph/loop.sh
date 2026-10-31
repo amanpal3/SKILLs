@@ -52,16 +52,32 @@ resolve_agent_cmd() {
   local name="$1"
   case "$name" in
     claude)
-      echo "${AGENT_CLAUDE_CMD:-claude -p --dangerously-skip-permissions \"\$(cat {prompt})\"}"
+      if [[ "${RALPH_ALLOW_UNSAFE_PERMISSIONS:-false}" == "true" ]]; then
+        echo "${AGENT_CLAUDE_CMD:-claude -p --dangerously-skip-permissions \"\$(cat {prompt})\"}"
+      else
+        echo "${AGENT_CLAUDE_CMD:-claude -p \"\$(cat {prompt})\"}"
+      fi
       ;;
     droid)
-      echo "${AGENT_DROID_CMD:-droid exec --skip-permissions-unsafe -f {prompt}}"
+      if [[ "${RALPH_ALLOW_UNSAFE_PERMISSIONS:-false}" == "true" ]]; then
+        echo "${AGENT_DROID_CMD:-droid exec --skip-permissions-unsafe -f {prompt}}"
+      else
+        echo "${AGENT_DROID_CMD:-droid exec -f {prompt}}"
+      fi
       ;;
     codex|"")
-      echo "${AGENT_CODEX_CMD:-codex exec --yolo --skip-git-repo-check -}"
+      if [[ "${RALPH_ALLOW_UNSAFE_PERMISSIONS:-false}" == "true" ]]; then
+        echo "${AGENT_CODEX_CMD:-codex exec --yolo --skip-git-repo-check -}"
+      else
+        echo "${AGENT_CODEX_CMD:-codex exec -s workspace-write -}"
+      fi
       ;;
     *)
-      echo "${AGENT_CODEX_CMD:-codex exec --yolo --skip-git-repo-check -}"
+      if [[ "${RALPH_ALLOW_UNSAFE_PERMISSIONS:-false}" == "true" ]]; then
+        echo "${AGENT_CODEX_CMD:-codex exec --yolo --skip-git-repo-check -}"
+      else
+        echo "${AGENT_CODEX_CMD:-codex exec -s workspace-write -}"
+      fi
       ;;
   esac
 }

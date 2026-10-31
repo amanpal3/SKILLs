@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-verifier
 description: Validates implemented work against spec requirements with empirical evidence
 ---

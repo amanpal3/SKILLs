@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "name": "ai-agent-security-policy",
+  "description": "Enterprise AI agent filesystem, network, and execution permission boundaries",
+  "policy": {
+    "safe_actions": [
+      "read_files_within_workspace",
+      "list_directories_within_workspace",
+      "search_codebase",
+      "run_local_unit_tests",
+      "run_linters_and_typechecks",
+      "format_code"
+    ],
+    "requires_user_approval": [
+      "edit_critical_configurations",
+      "add_new_npm_or_python_dependencies",
+      "run_database_migrations_or_writes",
+      "modify_authentication_or_authorization_logic",
+      "modify_payment_processing_flows",
+      "outbound_network_calls_to_untrusted_hosts",
+      "delete_multiple_files_or_directories"
+    ],
+    "strictly_forbidden": [
+      "reading_printing_or_committing_plaintext_secrets",
+      "accessing_dot_env_files_directly",
+      "accessing_user_ssh_or_aws_keys",
+      "destructive_filesystem_commands_like_rm_rf",
+      "force_push_or_history_rewrites_on_remote_git",
+      "modifying_production_databases",
+      "disabling_or_skipping_tests_silently_to_pass_ci",
+      "piping_downloads_directly_into_shell"
+    ]
+  }
+}

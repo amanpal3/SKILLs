@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "denied_tools_and_patterns": [
+    "eval()",
+    "Function() constructor",
+    "curl | sh",
+    "wget | bash",
+    "rm -rf /",
+    "rmdir /s /q C:\\",
+    "format",
+    "git push --force",
+    "git reset --hard",
+    "chmod 777 -R",
+    "cat .env",
+    "Get-Content .env"
+  ],
+  "enforcement": "Strict rejection with security error"
+}

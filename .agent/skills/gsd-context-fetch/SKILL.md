@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-context-fetch
 description: Search-first skill to reduce unnecessary file reads by searching before loading
 ---

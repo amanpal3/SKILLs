@@ -1,4 +1,4 @@
-﻿---
+---
 name: ralph-prd
 description: "Generate a Product Requirements Document (PRD) as JSON for Ralph. Triggers on: create a prd, write prd for, plan this feature, requirements for, spec out."
 ---

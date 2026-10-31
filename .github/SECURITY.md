@@ -1,8 +1,8 @@
 # Security Policy
 
-## ??? Security Architecture & Shielding
+## 🛡️ Security Architecture & Shielding
 
-This repository implements a multi-layer defense model to ensure safe execution across AI coding agents (Antigravity, Codex CLI, Claude Code, Cursor).
+This repository implements a multi-layer defense model to ensure safe execution across AI coding agents (Google Antigravity, OpenAI Codex, Claude Code, Cursor, Windsurf).
 
 ---
 
@@ -10,8 +10,8 @@ This repository implements a multi-layer defense model to ensure safe execution 
 
 | Version / Branch | Supported | Security Maintenance |
 | :--- | :---: | :--- |
-| `main` (Latest) | ? | Actively patched & audited |
-| `< 1.0` | ? | Deprecated |
+| `main` (Latest v2.x) | ✅ | Actively patched, scanned & audited |
+| `< 2.0` | ❌ | Deprecated |
 
 ---
 
@@ -20,22 +20,39 @@ This repository implements a multi-layer defense model to ensure safe execution 
 All skills, scripts, and workflows in this ecosystem adhere to the following mandatory policies:
 
 ### A. Zero Hardcoded Secrets
-* **Never commit keys, tokens, or credentials:** All sensitive values (e.g., `SENTRY_DSN`, `CONTEXT7_API_KEY`, `OPENAI_API_KEY`, database URLs) must be loaded from environment variables.
+* **Never commit keys, tokens, or credentials:** All sensitive values (e.g., `SENTRY_DSN`, `CONTEXT7_API_KEY`, `OPENAI_API_KEY`, GitHub PATs, database URLs) must be loaded from environment variables or secure local stores (`~/.config/21st/auth.json`, `~/.gemini/config/mcp_config.json`).
 * `.gitignore` enforces strict exclusions for `.env*`, `auth.json`, `oauth_creds.json`, and database state files.
+* Automated CI secret scanning via Gitleaks verifies zero committed credentials.
 
-### B. Sandboxed Subagent Execution
+### B. Safe Installer Execution & Non-Destructive Operations
+* All installers create automated backups in `~/.gemini/backups/` before modifying files.
+* Path validation (`assertSafePath`) blocks path traversal, UNC network paths, root system directories (`C:\Windows`, `/etc`), and sensitive credential vaults (`.ssh`, `.aws`, `.gnupg`, `.git`).
+* Uninstallation (`npx ai-ecosystem uninstall` / `install-skills.ps1 uninstall`) safely removes only declared ecosystem skills, strictly preserving user code and configurations.
+
+### C. Sandboxed Subagent Execution
 * Subagents and autonomous processes (`codex exec`, `ralph-loop`, `gsd-executor`) must operate with bounded workspace permissions.
-* Dangerous root directory executions (`/`, `C:\`, `C:\Windows`) are blocked by path validation assertions (`Assert-SafePath`).
+* The Ralph autonomous loop enforces permission gates by default, disabling dangerous flags unless explicitly opted in via `RALPH_ALLOW_UNSAFE_PERMISSIONS=true`.
 
-### C. Safe Documentation Retrieval (Context7)
+### D. Safe Documentation Retrieval (Context7) & Registry Verification (shadcn & 21st)
 * Use Context7 MCP to fetch official API documentation directly, preventing the ingestion of untrusted or hallucinated code patterns.
+* Registry tools (`shadcn`, `21st`) inspect source components before local installation.
 
-### D. Continuous Observability (Sentry)
-* All backend and frontend execution patterns include Sentry exception tracking and breadcrumb logging to catch runtime exceptions safely.
+### E. Continuous Diagnostics (`doctor`)
+* Run `npx ai-ecosystem doctor` to execute empirical health checks on Node version, manifest integrity, MCP configurations, secret detection, and file permissions.
 
 ---
 
-## 3. Reporting a Vulnerability
+## 3. GitHub Branch Protection & Governance Recommendations
+
+For fork maintainers and team deployments, we enforce:
+1. **Require Pull Request Reviews:** Require at least 1 code review approval matching `CODEOWNERS` before merging into `main`.
+2. **Require Status Checks to Pass:** Ensure CodeQL analysis and Gitleaks security scans pass before merging.
+3. **Disable Force Pushes:** Prevent history rewrites on `main` to protect audit trails.
+4. **Dependabot Security Updates:** Automated pull requests for vulnerable npm dependencies and GitHub Actions.
+
+---
+
+## 4. Reporting a Vulnerability
 
 If you discover a potential security vulnerability or secret leak within this repository:
 

@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-empirical-validation
 description: Requires proof before marking work complete â€” no "trust me, it works"
 ---

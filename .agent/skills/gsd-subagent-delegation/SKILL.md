@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-subagent-delegation
 description: Canonical protocol for delegating GSD work to native Antigravity subagents â€” when to delegate, how to invoke, workspace isolation modes, and the inline fallback for older IDE versions
 ---

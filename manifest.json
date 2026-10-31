@@ -1,0 +1,182 @@
+{
+    "version":  "2.1.0",
+    "name":  "ai-skills-ecosystem",
+    "description":  "Production-grade AI Skill System, MCP integrations, autonomous plugins, and multi-agent rules.",
+    "skills_count":  47,
+    "skills":  [
+                   "antigravity-agents",
+                   "archify",
+                   "brainstorming-ideas",
+                   "brand-identity",
+                   "building-backend",
+                   "code-review",
+                   "context7-mcp",
+                   "creating-skills",
+                   "defend-what-you-ship",
+                   "designing-with-stitch",
+                   "dev-browser",
+                   "error-handling-patterns",
+                   "graphify",
+                   "gsd",
+                   "gsd-codebase-mapper",
+                   "gsd-context-compressor",
+                   "gsd-context-fetch",
+                   "gsd-context-health-monitor",
+                   "gsd-debugger",
+                   "gsd-empirical-validation",
+                   "gsd-executor",
+                   "gsd-plan-checker",
+                   "gsd-planner",
+                   "gsd-subagent-delegation",
+                   "gsd-token-budget",
+                   "gsd-verifier",
+                   "gtm-strategy",
+                   "integrating-sentry",
+                   "managing-firebase",
+                   "owasp-security",
+                   "planning-strategy",
+                   "ponytail",
+                   "ponytail-audit",
+                   "ponytail-debt",
+                   "ponytail-gain",
+                   "ponytail-help",
+                   "ponytail-review",
+                   "project-management",
+                   "ralph-loop",
+                   "ralph-prd",
+                   "security-audit",
+                   "seo-optimizer",
+                   "testing-code",
+                   "ui-ux-pro-max",
+                   "unified-build-pipeline",
+                   "using-codex-cli",
+                   "using-remotion"
+               ],
+    "mcp_servers":  {
+                        "21st":  {
+                                     "description":  "21st.dev (Magic UI) component and animation registry search and source code fetcher",
+                                     "command":  "npx",
+                                     "args":  [
+                                                  "-y",
+                                                  "@21st-dev/magic@latest"
+                                              ]
+                                 },
+                        "shadcn":  {
+                                       "description":  "Official shadcn/ui component, block, and template registry search and installation server",
+                                       "command":  "npx",
+                                       "args":  [
+                                                    "shadcn@latest",
+                                                    "mcp"
+                                                ]
+                                   },
+                        "context7":  {
+                                         "description":  "Real-time, versioned official library and framework documentation fetcher",
+                                         "tools":  [
+                                                       "resolve-library-id",
+                                                       "query-docs"
+                                                   ]
+                                     },
+                        "StitchMCP":  {
+                                          "description":  "Google Stitch UI/UX prototype and design system generator",
+                                          "tools":  [
+                                                        "create_project",
+                                                        "generate_screen_from_text",
+                                                        "edit_screens",
+                                                        "create_design_system",
+                                                        "generate_variants"
+                                                    ]
+                                      },
+                        "chrome-devtools-mcp":  {
+                                                    "description":  "Direct Chrome DevTools Protocol automation and Lighthouse performance audits",
+                                                    "tools":  [
+                                                                  "navigate_page",
+                                                                  "click",
+                                                                  "type_text",
+                                                                  "take_screenshot",
+                                                                  "lighthouse_audit",
+                                                                  "evaluate_script"
+                                                              ]
+                                                },
+                        "playwright":  {
+                                           "description":  "Headless and headed persistent browser testing and DOM interaction",
+                                           "tools":  [
+                                                         "browser_navigate",
+                                                         "browser_click",
+                                                         "browser_type",
+                                                         "browser_snapshot",
+                                                         "browser_take_screenshot"
+                                                     ]
+                                       },
+                        "github-mcp-server":  {
+                                                  "description":  "GitHub repository, issue, and pull request management",
+                                                  "tools":  [
+                                                                "search_repositories",
+                                                                "get_file_contents",
+                                                                "create_or_update_file",
+                                                                "create_pull_request",
+                                                                "list_issues"
+                                                            ]
+                                              },
+                        "gmp-code-assist":  {
+                                                "description":  "Google Maps Platform documentation and API assistance",
+                                                "tools":  [
+                                                              "retrieve-instructions",
+                                                              "retrieve-google-maps-platform-docs"
+                                                          ]
+                                            },
+                        "firebase-mcp-server":  {
+                                                    "description":  "Firebase project management, Firestore schemas, Auth, and Functions",
+                                                    "tools":  [
+                                                                  "list_projects",
+                                                                  "get_project",
+                                                                  "manage_services"
+                                                              ]
+                                                }
+                    },
+    "plugins_count":  6,
+    "plugins":  [
+                    "coderabbit",
+                    "gsd",
+                    "ponytail",
+                    "ralph",
+                    "ralph-loop",
+                    "unified-build-pipeline"
+                ],
+    "rules":  [
+                  {
+                      "file":  "GEMINI.md",
+                      "environment":  "Google Antigravity",
+                      "purpose":  "Token-Optimized 8-Tier Dispatcher"
+                  },
+                  {
+                      "file":  "CLAUDE.md",
+                      "environment":  "Claude Code \u0026 Cursor",
+                      "purpose":  "Coding standards, directories, and git hygiene"
+                  },
+                  {
+                      "file":  "AGENTS.md",
+                      "environment":  "Universal Multi-Agent",
+                      "purpose":  "Multi-agent handoff and subagent protocol"
+                  },
+                  {
+                      "file":  "CODEX.md",
+                      "environment":  "OpenAI Codex CLI",
+                      "purpose":  "Non-interactive execution and sandbox rules"
+                  },
+                  {
+                      "file":  "PONYTAIL.md",
+                      "environment":  "All Agents",
+                      "purpose":  "Anti-bloat, YAGNI, standard library first"
+                  },
+                  {
+                      "file":  "backend.md",
+                      "environment":  "All Agents",
+                      "purpose":  "Production backend architecture \u0026 connection pooling"
+                  },
+                  {
+                      "file":  "DEFEND.md",
+                      "environment":  "All Agents",
+                      "purpose":  "Whiteboard defense, human ownership, pre-ship gate, dual-speed lanes"
+                  }
+              ]
+}

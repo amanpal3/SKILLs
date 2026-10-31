@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-token-budget
 description: Manages token budget estimation and tracking to prevent context overflow
 ---

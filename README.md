@@ -1,9 +1,9 @@
-# ?? AI Skills & Agent Ecosystem
+# 🚀 AI Skills & Agent Ecosystem
 
 > **A modular, production-grade AI Skill System and multi-agent orchestration framework for autonomous coding assistants.**
 
 <p align="center">
-  <a href="#-skill-catalog"><img src="https://img.shields.io/badge/Skills-43%20Active-blue?style=for-the-badge&logo=probot" alt="Skills" /></a>
+  <a href="#-skill-catalog"><img src="https://img.shields.io/badge/Skills-47%20Active-blue?style=for-the-badge&logo=probot" alt="Skills" /></a>
   <a href="#-namespaced-plugins"><img src="https://img.shields.io/badge/Plugins-6%20Packages-purple?style=for-the-badge&logo=powershell" alt="Plugins" /></a>
   <a href="#-real-time-mcp-integrations"><img src="https://img.shields.io/badge/MCP-Context7%20%7C%20Stitch%20%7C%20Sentry-emerald?style=for-the-badge&logo=fastapi" alt="MCP Servers" /></a>
   <a href="#-methodology"><img src="https://img.shields.io/badge/Methodology-GSD%20%7C%20Ralph%20%7C%20Ponytail-orange?style=for-the-badge&logo=target" alt="Methodology" /></a>
@@ -18,11 +18,13 @@ This repository is a centralized, cross-platform **AI Skill & Plugin Store** des
 
 Instead of saturating your LLM's context window with massive monolithic prompt files, this ecosystem implements an **on-demand skill loading architecture**: specialized instruction sets, production guardrails, and deterministic workflows are dynamically retrieved only when relevant to the task at hand.
 
+> 📖 **Complete Reference:** See [`ECOSYSTEM.md`](ECOSYSTEM.md) for the exhaustive guide to all 47 skills, 9 MCP integrations, 6 autonomous plugins, and rules, or [`manifest.json`](manifest.json) for the machine-readable catalog.
+
 ---
 
 ## ⚡ Quick Start: Clone & 1-Command Global Setup
 
-Anyone can clone this repository from GitHub and install all 43 skills globally across their machine in seconds:
+Anyone can clone this repository from GitHub and install all 47 skills globally across their machine in seconds:
 
 ### 1. Clone the Repository
 ```bash
@@ -45,11 +47,11 @@ install-skills.bat store
 
 > [!TIP]
 > **What `store` does automatically:**
-> 1. Syncs all 43 skills directly to `~/.gemini/config/skills/` (Google Antigravity Native Global Discovery)
+> 1. Syncs all 47 skills directly to `~/.gemini/config/skills/` (Google Antigravity Native Global Discovery)
 > 2. Syncs all 6 plugins directly to `~/.gemini/config/plugins/` (Google Antigravity Native Global Plugins)
 > 3. Syncs global rules to `~/.gemini/config/rules/` and `~/.gemini/GEMINI.md`
-> 4. Syncs all 43 skills to `~/.agent/skills/` and `~/.agents/skills/` (Universal Agent standards)
-> 5. Syncs all 43 skills to `~/.codex/skills/` (OpenAI Codex CLI)
+> 4. Syncs all 47 skills to `~/.agent/skills/` and `~/.agents/skills/` (Universal Agent standards)
+> 5. Syncs all 47 skills to `~/.codex/skills/` (OpenAI Codex CLI)
 > 6. Synchronizes `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `GEMINI.md`, workflows, and `manifest.json` to `~/.gemini/global-skills/`
 >
 > **Progressive Disclosure Note:** In Google Antigravity, skills are indexed dynamically and loaded on-demand when relevant tasks are requested, preserving your token budget rather than dumping all skills into the prompt upfront.
@@ -76,14 +78,14 @@ install-skills.bat install "C:\Projects\my-new-app"
 ```
 
 This will copy:
-- `.agent/skills/` (All 43 modular domain skills)
+- `.agent/skills/` (All 47 modular domain skills)
 - `.agent/plugins/` (All 6 autonomous plugins)
 - `.agent/workflows/` (Autonomous workflows & runbooks)
 - `GEMINI.md` (Native Google Antigravity rules & instructions)
 - `AGENTS.md` (Universal multi-agent instructions)
 - `CLAUDE.md` (Master instructions for Claude Code & Cursor)
 - `CODEX.md` (Master instructions for OpenAI Codex CLI)
-- `PONYTAIL.md` & `backend.md` (Architectural rules)
+- `PONYTAIL.md`, `backend.md` & `DEFEND.md` (Architectural & governance rules)
 
 ---
 
@@ -103,7 +105,7 @@ This will copy:
 ```
 skill/
 +-- .agent/
-�   +-- skills/                  # 43 modular domain skills
+�   +-- skills/                  # 47 modular domain skills
 �   �   +-- antigravity-agents/  # Multi-agent squad orchestration
 �   �   +-- building-backend/    # Production APIs, schemas & microservices
 �   �   +-- context7-mcp/        # Real-time docs & versioned library search
@@ -121,15 +123,16 @@ skill/
 +-- CLAUDE.md                    # Canonical rules & skill loading logic
 +-- PONYTAIL.md                  # Lazy Senior Dev decision ladder
 +-- backend.md                   # Enterprise backend architectural rules
++-- DEFEND.md                    # Defend What You Ship human whiteboard defense
 +-- install-skills.ps1           # Portable PowerShell installer & global synchronizer
 +-- install-skills.bat           # Windows 1-click batch installer
 ```
 
 ---
 
-## 🧭 Skill Catalog (43 Skills)
+## 🧩 Skill Catalog (47 Skills)
 
-### ??? Backend, APIs & Observability
+### 🛠️ Backend, APIs & Observability
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
 | **`building-backend`** | `.agent/skills/building-backend/` | Production REST, GraphQL, gRPC APIs, database migrations, Redis caching, worker queues, and microservices. |
@@ -137,28 +140,32 @@ skill/
 | **`managing-firebase`** | `.agent/skills/managing-firebase/` | Firebase project initialization, Firestore schemas, Cloud Functions, and Firebase MCP integrations. |
 | **`error-handling-patterns`** | `.agent/skills/error-handling-patterns/` | Fault-tolerant error propagation, Result types, structured logs, circuit breakers, and graceful degradation. |
 
-### ?? Frontend, UI/UX & Design Systems
+### 🎨 Frontend, UI/UX & Design Systems
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
 | **`ui-ux-pro-max`** | `.agent/skills/ui-ux-pro-max/` | Senior UI/UX design tokens, UX psychology laws (Fitts, Hick, Miller), storytelling layouts, and micro-interactions. |
 | **`designing-with-stitch`**| `.agent/skills/designing-with-stitch/` | Screen generation, responsive device layouts, and design system tokens using Google Stitch MCP. |
 | **`brand-identity`** | `.agent/skills/brand-identity/` | Design tokens, typography hierarchies, semantic color palettes, and brand voice guidelines. |
 | **`using-remotion`** | `.agent/skills/using-remotion/` | Programmatic motion graphics, data-driven animations, and video rendering using React & Remotion. |
+| **`archify`** | `.agent/skills/archify/` | Compiles architecture, workflow, sequence, ERD, and lifecycle models into interactive HTML diagrams with visual audits. |
 
-### ?? Documentation & Developer Intelligence
+### 📚 Documentation & Developer Intelligence
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
+| **`graphify`** | `.agent/skills/graphify/` | Transforms codebases into queryable AST knowledge graphs (`graph.json`, `graph.html`); powers `/graphify query`, `path`, and `explain`. |
 | **`context7-mcp`** | `.agent/skills/context7-mcp/` | Fetches live, version-specific library docs and code snippets via Context7 MCP to eliminate hallucinated APIs. |
 | **`dev-browser`** | `.agent/skills/dev-browser/` | Persistent browser automation, end-to-end user flows, form filling, scraping, and visual testing. |
 
-### ??? Security, Code Quality & Testing
+### 🛡️ Security, Code Quality & Testing
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
+| **`defend-what-you-ship`** | `.agent/skills/defend-what-you-ship/` | Human whiteboard ownership doctrine: dual-speed lanes (PoC vs Lane B), session handovers, zero-vibes verification, teach-back drills, and `docs/` scaffolding. |
+| **`security-audit`** | `.agent/skills/security-audit/` | Multi-agent adversarial security auditor (Cloudflare methodology): reconnaissance, coverage hunting across 10 attack classes, independent candidate validation, and verified findings. |
 | **`owasp-security`** | `.agent/skills/owasp-security/` | OWASP Top 10 mitigation, auth boundaries, strict input validation, secret hygiene, and SQLi/XSS defense. |
 | **`code-review`** | `.agent/skills/code-review/` | Senior code review auditing for correctness, security vulnerabilities, performance bottlenecks, and clean diffs. |
 | **`testing-code`** | `.agent/skills/testing-code/` | Automated test suite architecture across Unit, Integration, and E2E (Vitest, Jest, Pytest, Playwright). |
 
-### ?? Simplicity & Anti-Overengineering (Ponytail Suite)
+### ✂️ Simplicity & Anti-Overengineering (Ponytail Suite)
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
 | **`ponytail`** | `.agent/skills/ponytail/` | Enforces the shortest working solution: standard library first, zero speculative wrappers, YAGNI. |
@@ -168,7 +175,7 @@ skill/
 | **`ponytail-gain`** | `.agent/skills/ponytail-gain/` | Calculates metrics on deleted code, reduced dependencies, and improved execution speed. |
 | **`ponytail-help`** | `.agent/skills/ponytail-help/` | Quick-reference cheat sheet for all Ponytail commands, intensity tiers, and rules. |
 
-### ?? Autonomous Build Pipelines & Orchestration
+### 🚀 Autonomous Build Pipelines & Orchestration
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
 | **`antigravity-agents`** | `.agent/skills/antigravity-agents/` | Orchestrates multi-agent squads (planners, coders, security, UI) running parallel workflows. |
@@ -176,7 +183,7 @@ skill/
 | **`ralph-loop`** | `.agent/skills/ralph-loop/` | Autonomous story execution loop processing `prd.json` with automated quality gates and browser checks. |
 | **`ralph-prd`** | `.agent/skills/ralph-prd/` | Generates standardized, machine-readable PRD JSON specifications ready for Ralph execution. |
 
-### ? Get Shit Done (GSD Suite - 14 Sub-Skills)
+### ⚡ Get Shit Done (GSD Suite - 14 Sub-Skills)
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
 | **`gsd`** | `.agent/skills/gsd/` | Master GSD methodology: planning lock, wave execution, state dumps, and empirical verification. |
@@ -193,7 +200,7 @@ skill/
 | **`gsd-token-budget`** | `.agent/skills/gsd-token-budget/` | Estimates and manages token allocations across planning, execution, and verification phases. |
 | **`gsd-empirical-validation`**| `.agent/skills/gsd-empirical-validation/`| Enforces proof requirements (test output, command exit code) before marking any task complete. |
 
-### ?? Product, Strategy & Growth
+### 📈 Product, Strategy & Growth
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
 | **`project-management`** | `.agent/skills/project-management/` | Creates PRDs, sprint planning sheets, roadmaps, and Linear/Jira/Notion tickets. |
@@ -206,26 +213,53 @@ skill/
 
 ## 🔌 Namespaced Plugins
 
-Plugins bundle rules, skills, and tools into unified modules located in `.agent/plugins/`:
+Plugins bundle rules, skills, and tools into unified, autonomous modules located in `.agent/plugins/` (and globally in `~/.gemini/config/plugins/`):
 
-| Plugin | Purpose | Integrated Rules |
-| :--- | :--- | :--- |
-| **`coderabbit`** | Automated AI code reviews & security audits | Quality gates, input boundary validation, pre-commit checklists |
-| **`gsd`** | Spec-driven autonomous execution | Planning lock, wave execution, context hygiene, empirical proof |
-| **`ponytail`** | Extreme simplicity & anti-overengineering | YAGNI enforcement, standard library first, debt tracking |
-| **`ralph`** | PRD generation and validation | Machine-readable schema, user story dependencies |
-| **`ralph-loop`** | Deterministic test-driven build loop | Sequential story execution, quality gate checks, browser automation |
-| **`unified-build-pipeline`** | End-to-end software delivery | Combines GSD planning + Ralph execution + CodeRabbit review |
+> 📖 **Full Plugin Manual:** See [`PLUGINS_AND_MCP_README.md`](PLUGINS_AND_MCP_README.md) for deep-dive architecture, rule sets, and subagent delegation workflows.
+
+| Plugin | Purpose | Integrated Rules | Auth / Keys Required? |
+| :--- | :--- | :--- | :---: |
+| **`coderabbit`** | Automated AI code reviews & security audits | Quality gates, input boundary validation, pre-commit checklists | ❌ None (Local Intelligence) |
+| **`gsd`** | Spec-driven autonomous execution | Planning lock, wave execution, context hygiene, empirical proof | ❌ None (Local Intelligence) |
+| **`ponytail`** | Extreme simplicity & anti-overengineering | YAGNI enforcement, standard library first, debt tracking | ❌ None (Local Intelligence) |
+| **`ralph`** | PRD generation and validation | Machine-readable schema, user story dependencies | ❌ None (Local Intelligence) |
+| **`ralph-loop`** | Deterministic test-driven build loop | Sequential story execution, quality gate checks, browser automation | ❌ None (Local Browser) |
+| **`unified-build-pipeline`** | End-to-end software delivery | Combines GSD planning + Ralph execution + CodeRabbit review | ❌ None (Local Pipeline) |
 
 ---
 
-## 🌐 Real-Time MCP Integrations
+## 🌐 Real-Time MCP Integrations & API Key Matrix
 
-This ecosystem comes pre-configured with top-tier Model Context Protocol (MCP) integrations:
+This ecosystem comes pre-configured with 9 production-grade Model Context Protocol (MCP) integrations:
+
+> 📖 **Complete Setup Guide:** See [`PLUGINS_AND_MCP_README.md`](PLUGINS_AND_MCP_README.md) for exact setup commands, CLI login flows (`21st login`), and live JSON-RPC verification scripts.
+
+### 🔑 Master API Key Requirements Table
+
+| Server Name | Command / Protocol | Auth Required? | Tier / Cost | Key Provider URL | Env Var / Header |
+| :--- | :--- | :---: | :--- | :--- | :--- |
+| **`shadcn`** | `npx -y shadcn@latest mcp` | ❌ **No** | Free & Open Source | Built-in | None (Local execution) |
+| **`21st` (Magic UI)**| `npx -y @21st-dev/magic@latest` | ✅ **Yes** | Free Tier Available | [21st.dev/mcp](https://21st.dev/mcp) | `API_KEY` / `21st login` |
+| **`context7`** | `https://mcp.context7.com/mcp` | ✅ **Yes** | Free Tier Available | [context7.com](https://context7.com) | `Authorization: Bearer <KEY>` |
+| **`StitchMCP`** | `npx -y mcp-remote ...` | ✅ **Yes** | Google Cloud / Stitch | [stitch.googleapis.com](https://stitch.googleapis.com) | `X-Goog-Api-Key: <KEY>` |
+| **`chrome-devtools-mcp`**| `npx -y chrome-devtools-mcp@latest` | ❌ **No** | Free & Local | Local Chrome / Node | None (Local DevTools) |
+| **`playwright`** | `npx -y @playwright/mcp@latest` | ❌ **No** | Free & Local | Local Playwright | None (Local Browser) |
+| **`github-mcp-server`** | `npx -y @modelcontextprotocol/server-github` | ✅ **Yes** | Free (GitHub Account) | [github.com/settings/tokens](https://github.com/settings/tokens) | `GITHUB_PERSONAL_ACCESS_TOKEN` |
+| **`gmp-code-assist`** | `https://mapscodeassist.googleapis.com/mcp` | ⚠️ **Optional** | Google Cloud Tier | [console.cloud.google.com](https://console.cloud.google.com) | Google ADC / Header |
+| **`firebase-mcp-server`**| `npx -y firebase-mcp-server` | ✅ **Yes** | Free Tier Available | [firebase.google.com](https://firebase.google.com) | `firebase login` (CLI OAuth) |
 
 ```json
 {
   "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "shadcn@latest", "mcp"]
+    },
+    "21st": {
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": { "API_KEY": "YOUR_21ST_API_KEY" }
+    },
     "context7": {
       "serverUrl": "https://mcp.context7.com/mcp",
       "headers": { "Authorization": "Bearer YOUR_CONTEXT7_API_KEY" }
@@ -241,6 +275,11 @@ This ecosystem comes pre-configured with top-tier Model Context Protocol (MCP) i
     "playwright": {
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "github-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT" }
     }
   }
 }
@@ -255,17 +294,18 @@ When user requests arrive, the AI dynamically resolves intent into the optimal s
 ```
 User Request
     �
-    +-- ?? UI / Design / Mockup         --? designing-with-stitch + ui-ux-pro-max + brand-identity
-    +-- ?? Library Docs / API Reference --? context7-mcp
-    +-- ??? Error Tracking / APM / Sentry--? integrating-sentry + error-handling-patterns
-    +-- ?? Security / Auth / Audit      --? owasp-security + code-review
-    +-- ??? Backend / API / Database     --? building-backend + integrating-sentry
-    +-- ?? Anti-Bloat / Minimal Code    --? ponytail
-    +-- ?? Full-Stack Autonomous Build  --? unified-build-pipeline (GSD + Ralph + CodeRabbit)
-    +-- ?? Multi-Agent Squad            --? antigravity-agents
-    +-- ?? PRD / Sprint / Roadmap       --? project-management
-    +-- ?? Launch / SEO / GTM           --? gtm-strategy + seo-optimizer
-    +-- ??? Authoring a New Skill        --? creating-skills
+    +-- 🎨 UI / Design / Mockup         --? designing-with-stitch + ui-ux-pro-max + brand-identity
+    +-- 🕸️ Codebase Graph / Architecture--? graphify + archify + gsd-codebase-mapper
+    +-- 📚 Library Docs / API Reference --? context7-mcp
+    +-- 🚨 Error Tracking / APM / Sentry--? integrating-sentry + error-handling-patterns
+    +-- 🛡️ Security / Whiteboard Defense--? defend-what-you-ship + security-audit + owasp-security + code-review
+    +-- 🛠️ Backend / API / Database     --? building-backend + integrating-sentry
+    +-- ✂️ Anti-Bloat / Minimal Code    --? ponytail
+    +-- 🚀 Full-Stack Autonomous Build  --? unified-build-pipeline (GSD + Ralph + CodeRabbit)
+    +-- 👥 Multi-Agent Squad            --? antigravity-agents
+    +-- 📋 PRD / Sprint / Roadmap       --? project-management
+    +-- 📈 Launch / SEO / GTM           --? gtm-strategy + seo-optimizer
+    +-- 💡 Authoring a New Skill        --? creating-skills
 ```
 
 ---

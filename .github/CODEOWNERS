@@ -1,0 +1,12 @@
+# Global code ownership specification
+# All PRs touching skills, plugins, rules, or security validators require review.
+
+*                   @amanpal3
+/security/          @amanpal3
+/.github/           @amanpal3
+/bin/               @amanpal3
+/.agent/plugins/    @amanpal3
+/.agent/skills/     @amanpal3
+manifest.json       @amanpal3
+mcp.json            @amanpal3
+package.json        @amanpal3

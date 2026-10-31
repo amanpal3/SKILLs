@@ -1,4 +1,4 @@
-﻿---
+---
 name: ralph-loop
 description: Executes Ralph autonomous build loops. Selects open user stories from prd.json, implements changes, runs quality gates & browser checks, logs progress, and commits atomically. Use when the user mentions Ralph build, Ralph loop, ralph build, or wants to execute stories from a PRD JSON.
 ---

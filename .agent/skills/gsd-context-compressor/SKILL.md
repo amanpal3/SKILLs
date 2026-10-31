@@ -1,4 +1,4 @@
-﻿---
+---
 name: gsd-context-compressor
 description: Strategies for compressing context to maximize token efficiency
 ---
