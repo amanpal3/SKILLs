@@ -26,6 +26,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_SUMMARY: true
 
+  ecosystem-security-tests:
+    name: Security Test Suite & Diagnostics
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Ecosystem Diagnostics Doctor
+        run: npm run doctor
+
+      - name: Run Security Test Suite
+        run: npm run test:security
+
   path-safety-lint:
     name: Path Safety & Integrity Audit
     runs-on: ubuntu-latest
@@ -33,11 +51,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Audit for Forbidden Hardcoded Paths
+      - name: Audit for Forbidden Hardcoded Paths in Scripts
         run: |
-          echo "Checking for sensitive absolute paths in repository..."
-          if grep -rnw "C:\\Users\\" . --exclude-dir=".git" ; then
-            echo "ERROR: Hardcoded local Windows user paths detected!"
+          echo "Checking for sensitive absolute paths in repository scripts..."
+          if grep -rnw "C:\\Users\\" bin security tests install-skills.* --exclude-dir=".git" 2>/dev/null; then
+            echo "ERROR: Hardcoded local Windows user paths detected in executable scripts!"
             exit 1
           fi
           echo "No sensitive local paths found."

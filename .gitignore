@@ -87,3 +87,7 @@ desktop.ini
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# Temporary archify files
+.archify-remove-*
+
