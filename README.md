@@ -1,7 +1,7 @@
 # ⚡ AI Developer Agent Ecosystem
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/amanpal3/SKILLs/main/.agent/skills/brand-identity/assets/banner.png" alt="AI Developer Agent Ecosystem Banner" width="100%" onerror="this.style.display='none'"/>
+  <img src="assets/logo_ponytail_cyan.png" alt="SKILLs Logo" width="320" style="border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 229, 255, 0.25);" />
 </p>
 
 <p align="center">
