@@ -1,376 +1,385 @@
-# 🚀 AI Skills & Agent Ecosystem
-
-> **A modular, production-grade AI Skill System and multi-agent orchestration framework for autonomous coding assistants.**
+# ⚡ AI Developer Agent Ecosystem
 
 <p align="center">
-  <a href="#-skill-catalog"><img src="https://img.shields.io/badge/Skills-47%20Active-blue?style=for-the-badge&logo=probot" alt="Skills" /></a>
-  <a href="#-namespaced-plugins"><img src="https://img.shields.io/badge/Plugins-6%20Packages-purple?style=for-the-badge&logo=powershell" alt="Plugins" /></a>
-  <a href="#-real-time-mcp-integrations"><img src="https://img.shields.io/badge/MCP-Context7%20%7C%20Stitch%20%7C%20Sentry-emerald?style=for-the-badge&logo=fastapi" alt="MCP Servers" /></a>
-  <a href="#-methodology"><img src="https://img.shields.io/badge/Methodology-GSD%20%7C%20Ralph%20%7C%20Ponytail-orange?style=for-the-badge&logo=target" alt="Methodology" /></a>
-  <a href="#-security-testing--quality"><img src="https://img.shields.io/badge/Security-OWASP%20Hardened-red?style=for-the-badge&logo=shield" alt="Security" /></a>
+  <img src="https://raw.githubusercontent.com/amanpal3/SKILLs/main/.agent/skills/brand-identity/assets/banner.png" alt="AI Developer Agent Ecosystem Banner" width="100%" onerror="this.style.display='none'"/>
+</p>
+
+<p align="center">
+  <strong>A modular, enterprise-hardened AI Skill Store, MCP Tool Suite, and Multi-Agent Orchestration Framework for Autonomous Coding Assistants.</strong>
+</p>
+
+<p align="center">
+  <a href="#-skill-catalog"><img src="https://img.shields.io/badge/Skills-47%20Verified-0ea5e9?style=for-the-badge&logo=probot" alt="Skills" /></a>
+  <a href="#-namespaced-plugins"><img src="https://img.shields.io/badge/Plugins-6%20Packages-8b5cf6?style=for-the-badge&logo=powershell" alt="Plugins" /></a>
+  <a href="#-real-time-mcp-integrations"><img src="https://img.shields.io/badge/MCP%20Servers-9%20Integrated-10b981?style=for-the-badge&logo=fastapi" alt="MCP Servers" /></a>
+  <a href="#-security-hardening--governance"><img src="https://img.shields.io/badge/Security-OWASP%20Hardened-059669?style=for-the-badge&logo=shield" alt="Security" /></a>
+  <a href="#-automated-testing--diagnostics"><img src="https://img.shields.io/badge/Tests-19%2F19%20Pass-22c55e?style=for-the-badge&logo=node.js" alt="Tests" /></a>
+  <a href="#-cli-commands"><img src="https://img.shields.io/badge/CLI-Cross--Platform-f59e0b?style=for-the-badge&logo=gnubash" alt="CLI" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-64748b?style=for-the-badge" alt="License" /></a>
+</p>
+
+<p align="center">
+  <a href="#-overview">Overview</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-global-installation-doctrine">Global Store</a> •
+  <a href="#-key-features">Features</a> •
+  <a href="#-skill-routing-hierarchy">Routing Hierarchy</a> •
+  <a href="#-skill-catalog-47-skills">Skill Catalog</a> •
+  <a href="#-namespaced-plugins">Plugins</a> •
+  <a href="#-real-time-mcp-integrations">MCP Suite</a> •
+  <a href="#-security-hardening--governance">Security</a>
 </p>
 
 ---
 
 ## 📖 Overview
 
-This repository is a centralized, cross-platform **AI Skill & Plugin Store** designed for modern AI coding agents — including **Google Antigravity**, **OpenAI Codex CLI**, **Claude Code**, **Cursor**, **Windsurf**, and **Devin**.
+The **AI Developer Agent Ecosystem** is a production-grade, centralized skill catalog and runtime governance suite built for modern autonomous coding agents — including **Google Antigravity**, **OpenAI Codex CLI**, **Claude Code**, **Cursor**, **Windsurf**, and **Devin**.
 
-Instead of saturating your LLM's context window with massive monolithic prompt files, this ecosystem implements an **on-demand skill loading architecture**: specialized instruction sets, production guardrails, and deterministic workflows are dynamically retrieved only when relevant to the task at hand.
+Instead of saturating your LLM's context window with massive monolithic instructions, this ecosystem implements a **Progressive Disclosure Architecture**: specialized instruction sets, security guardrails, design systems, and deterministic workflows are dynamically retrieved **on-demand** only when relevant to the task.
 
-> 📖 **Complete Reference:** See [`ECOSYSTEM.md`](ECOSYSTEM.md) for the exhaustive guide to all 47 skills, 9 MCP integrations, 6 autonomous plugins, and rules, or [`manifest.json`](manifest.json) for the machine-readable catalog.
+```
+                    ┌───────────────────────────────┐
+                    │  Developer / User Prompt      │
+                    └───────────────┬───────────────┘
+                                    │
+                                    ▼
+                    ┌───────────────────────────────┐
+                    │ 8-Tier Context Router         │
+                    │ (Progressive Disclosure)      │
+                    └───────┬───────────────┬───────┘
+                            │               │
+            ┌───────────────▼───────┐       └───────────────────────┐
+            │ Modular Skills (47)   │                               │
+            │ • Backend & APIs      │                               ▼
+            │ • UI/UX & Design      │               ┌───────────────────────────────┐
+            │ • Security & Testing  │               │ 9 Real-Time MCP Servers       │
+            │ • GSD & Ponytail      │               │ Context7, Stitch, Sentry,     │
+            └───────────────┬───────┘               │ DevTools, GitHub, Playwright  │
+                            │                       └───────────────┬───────────────┘
+                            ▼                                       │
+                    ┌───────────────────────────────────────────────▼┐
+                    │ High-Confidence, Empirically-Verified Code     │
+                    └────────────────────────────────────────────────┘
+```
+
+> 📚 **Complete Documentation:**
+> - [**ECOSYSTEM.md**](ECOSYSTEM.md) — Comprehensive technical reference across all 47 skills, plugins, and architectures.
+> - [**PLUGINS_AND_MCP_README.md**](PLUGINS_AND_MCP_README.md) — Master guide for MCP servers, CLI logins, and API Key requirements.
+> - [**DEFEND.md**](DEFEND.md) — Human whiteboard defense and pre-ship quality checklists.
+> - [**SECURITY_AUDIT.md**](SECURITY_AUDIT.md) — Vulnerability register, CVSS ratings, and hardening proof.
 
 ---
 
-## ⚡ Quick Start: Clone & 1-Command Global Setup
-
-Anyone can clone this repository from GitHub and install all 47 skills globally across their machine in seconds:
+## ⚡ Quick Start
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/SKILLs.git
+git clone https://github.com/amanpal3/SKILLs.git
 cd SKILLs
 ```
 
-### 2. Store Skills Globally (Syncs to All Agents)
-Run the automated installer to sync all skills, plugins, and instructions into your global user directories:
-
-```powershell
-# In PowerShell (ExecutionPolicy Bypass ensures Windows doesn't block the script):
-powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 store
+### 2. Verify Health & Security
+Run the native diagnostic doctor to verify your environment, dependencies, and configuration integrity:
+```bash
+npm run doctor
 ```
 
-Or on standard Windows CMD:
+```
+============================================
+  AI ECOSYSTEM SECURITY & HEALTH DIAGNOSTICS
+============================================
+[PASS] Node.js Version: v24.20.0 (>=18 required)
+[PASS] Manifest Validation: 47 skills declared, 6 plugins declared
+[PASS] MCP Configuration: 7 servers configured, zero hardcoded secrets
+[PASS] Secret Detection: Scanned 1,108 files, 0 credentials exposed
+[PASS] Package Integrity: 7 critical governance files verified
+[PASS] Global Installation: Detected active store (~/.gemini ~/.agent)
+--------------------------------------------
+Overall Status: HEALTHY
+--------------------------------------------
+```
+
+---
+
+## 🌐 Global Installation Doctrine
+
+> [!IMPORTANT]
+> **One-Time Setup, Machine-Wide Availability:**  
+> When you run the `store` command, all **47 skills**, **6 plugins**, and **governance rules** are stored in your user profile's global directories (`~/.gemini/config/skills/`, `~/.agent/skills/`, and `~/.codex/skills/`).  
+> **Every repository and IDE session on your computer gets immediate access** without needing to re-copy files into every project folder.
+
+### Run the Global Installer:
+
+**Windows PowerShell:**
+```powershell
+powershell -NoProfile -ExecutionPolicy RemoteSigned -File .\install-skills.ps1 store
+```
+
+**Windows CMD:**
 ```cmd
 install-skills.bat store
 ```
 
-> [!TIP]
-> **What `store` does automatically:**
-> 1. Syncs all 47 skills directly to `~/.gemini/config/skills/` (Google Antigravity Native Global Discovery)
-> 2. Syncs all 6 plugins directly to `~/.gemini/config/plugins/` (Google Antigravity Native Global Plugins)
-> 3. Syncs global rules to `~/.gemini/config/rules/` and `~/.gemini/GEMINI.md`
-> 4. Syncs all 47 skills to `~/.agent/skills/` and `~/.agents/skills/` (Universal Agent standards)
-> 5. Syncs all 47 skills to `~/.codex/skills/` (OpenAI Codex CLI)
-> 6. Synchronizes `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `GEMINI.md`, workflows, and `manifest.json` to `~/.gemini/global-skills/`
->
-> **Progressive Disclosure Note:** In Google Antigravity, skills are indexed dynamically and loaded on-demand when relevant tasks are requested, preserving your token budget rather than dumping all skills into the prompt upfront.
+**Node / Universal CLI:**
+```bash
+node bin/ai-ecosystem.js install --global
+```
+
+#### What Happens Under the Hood:
+1. **Google Antigravity Discovery:** Syncs skills to `~/.gemini/config/skills/` and plugins to `~/.gemini/config/plugins/`.
+2. **Universal Agent Standard:** Syncs skills to `~/.agent/skills/` and rules to `~/.agent/rules/`.
+3. **OpenAI Codex CLI Integration:** Syncs skills to `~/.codex/skills/` for instant `codex exec` resolution.
+4. **Automated Safety Backups:** Automatically creates a rollback point in `~/.gemini/backups/` before any changes are written.
 
 ---
 
-## 🚀 Installing Skills into a Specific Project
+## 🚀 Project-Specific Installation (Optional)
 
-If you want to inject the skills and instructions directly into an existing project or new repository (e.g. to commit `.agent/` into your team's Git repo):
+If you prefer to commit skills directly into a specific project repository (e.g. for team collaboration):
 
 ```powershell
-# Install into the current project directory:
-powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 install
+# Install into current project:
+.\install-skills.ps1 install
 
-# Or install into a specific target directory:
-powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 install -TargetPath "C:\Projects\my-new-app"
+# Or install into a custom path:
+.\install-skills.ps1 install -TargetPath "C:\Projects\my-app"
 ```
 
-Or on standard Windows CMD:
-```cmd
-install-skills.bat install
-# Or:
-install-skills.bat install "C:\Projects\my-new-app"
+Or via Node CLI:
+```bash
+node bin/ai-ecosystem.js install --target "C:\Projects\my-app"
 ```
-
-This will copy:
-- `.agent/skills/` (All 47 modular domain skills)
-- `.agent/plugins/` (All 6 autonomous plugins)
-- `.agent/workflows/` (Autonomous workflows & runbooks)
-- `GEMINI.md` (Native Google Antigravity rules & instructions)
-- `AGENTS.md` (Universal multi-agent instructions)
-- `CLAUDE.md` (Master instructions for Claude Code & Cursor)
-- `CODEX.md` (Master instructions for OpenAI Codex CLI)
-- `PONYTAIL.md`, `backend.md` & `DEFEND.md` (Architectural & governance rules)
 
 ---
 
-## ✨ Key Highlights
+## ✨ Key Features & Capabilities
 
-- ?? **Context7 Real-Time Documentation:** Zero-hallucination library docs and version-specific code examples fetched dynamically straight from official sources.
-- ??? **Sentry Error Tracking & APM:** Automated error boundaries, distributed tracing, and breadcrumb-rich exception capturing for Python, Next.js, and Node.js.
-- ?? **Google Stitch MCP UI Generation:** Turn natural language prompts into production-grade, conversion-optimized UI designs backed by senior UX psychology.
-- ?? **Ponytail Anti-Bloat Philosophy:** Ruthless enforcement of YAGNI, standard library first, zero speculative abstractions, and minimal diffs.
-- ?? **Autonomous Execution Pipelines:** Battle-tested **GSD (Get Shit Done)**, **Ralph Loop** deterministic user stories, and **CodeRabbit** AI code review gates.
-- ? **Zero-Bloat Context:** Every skill is isolated into its own `SKILL.md` domain file, preserving token budget for your actual codebase.
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🧠 Zero-Hallucination Docs</h3>
+      <p>Integrated <strong>Context7 MCP</strong> retrieves live, version-specific library docs and verified API signatures in real-time, eliminating hallucinated methods in modern frameworks.</p>
+    </td>
+    <td width="50%">
+      <h3>🛡️ Defend What You Ship</h3>
+      <p>Strict whiteboard defense governance: <strong>Dual-Speed Lanes</strong> (PoC vs Customer-Facing), session handovers, zero-vibes empirical verification, and <code>docs/</code> decision ledgers.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>✂️ Ponytail Radical Simplicity</h3>
+      <p>Anti-overengineering doctrine enforcing standard library first, YAGNI, zero speculative abstractions, minimal PR diffs, and deliberate debt ledger tracking.</p>
+    </td>
+    <td width="50%">
+      <h3>⚡ GSD Autonomous Waves</h3>
+      <p><strong>Get Shit Done (GSD)</strong> methodology with strict Spec Locks, dependency-ordered wave execution, context hygiene state dumps, and automatic git checkpointing.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🎨 UI/UX Pro Max & Stitch</h3>
+      <p>AI design system integrating <strong>Google Stitch MCP</strong>, <strong>shadcn</strong>, and <strong>21st.dev</strong> with senior UX psychology laws (Fitts, Hick, Miller) and fluid motion.</p>
+    </td>
+    <td width="50%">
+      <h3>🔒 Hardened Security Architecture</h3>
+      <p>Zero hardcoded keys, automated secret scanner, path traversal blockers, sandboxed agent permissions, and CodeRabbit AI quality review gates.</p>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 🗂️ Repository Architecture
+## 🚦 Skill Routing Hierarchy
 
-```
-skill/
-+-- .agent/
-�   +-- skills/                  # 47 modular domain skills
-�   �   +-- antigravity-agents/  # Multi-agent squad orchestration
-�   �   +-- building-backend/    # Production APIs, schemas & microservices
-�   �   +-- context7-mcp/        # Real-time docs & versioned library search
-�   �   +-- designing-with-stitch/# Google Stitch UI screens & design systems
-�   �   +-- integrating-sentry/  # Sentry APM, exception capture & DSNs
-�   �   +-- gsd/                 # Get Shit Done master methodology
-�   �   +-- owasp-security/      # OWASP Top 10 defense & auth boundaries
-�   �   +-- ponytail/            # Minimal solution & anti-overengineering
-�   �   +-- ralph-loop/          # Autonomous story execution loop
-�   �   +-- ui-ux-pro-max/       # Senior UX laws & design system tokens
-�   �   +-- ...                  # (Full catalog detailed below)
-�   +-- plugins/                 # 6 namespaced plugins (GSD, Ralph, Ponytail, etc.)
-�   +-- workflows/               # Autonomous development playbooks
-+-- AGENTS.md                    # Universal agent behavior instructions
-+-- CLAUDE.md                    # Canonical rules & skill loading logic
-+-- PONYTAIL.md                  # Lazy Senior Dev decision ladder
-+-- backend.md                   # Enterprise backend architectural rules
-+-- DEFEND.md                    # Defend What You Ship human whiteboard defense
-+-- install-skills.ps1           # Portable PowerShell installer & global synchronizer
-+-- install-skills.bat           # Windows 1-click batch installer
+When requests arrive, the agent matches user intent against this deterministic routing ladder to minimize token overhead:
+
+```text
+User Request
+ │
+ ├── 🎨 UI / Design / Mockup         ──► designing-with-stitch + ui-ux-pro-max + brand-identity
+ ├── 🕸️ Codebase Graph / Architecture──► graphify + archify + gsd-codebase-mapper
+ ├── 📚 Library Docs / API Reference ──► context7-mcp
+ ├── 🚨 Error Tracking / APM / Sentry──► integrating-sentry + error-handling-patterns
+ ├── 🛡️ Security / Whiteboard Defense──► defend-what-you-ship + security-audit + owasp-security
+ ├── 🛠️ Backend / API / Database     ──► building-backend + integrating-sentry
+ ├── ✂️ Anti-Bloat / Minimal Code    ──► ponytail
+ ├── 🚀 Full Autonomous Delivery     ──► unified-build-pipeline (GSD + Ralph + CodeRabbit)
+ ├── 👥 Multi-Agent Squad            ──► antigravity-agents
+ ├── 📋 PRD / Sprint / Roadmap       ──► project-management + ralph-prd
+ ├── 📈 Launch / SEO / GTM           ──► gtm-strategy + seo-optimizer
+ └── 💡 Authoring a New Skill        ──► creating-skills
 ```
 
 ---
 
 ## 🧩 Skill Catalog (47 Skills)
 
-### 🛠️ Backend, APIs & Observability
+### 🛠️ Backend, APIs & Infrastructure
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`building-backend`** | `.agent/skills/building-backend/` | Production REST, GraphQL, gRPC APIs, database migrations, Redis caching, worker queues, and microservices. |
-| **`integrating-sentry`** | `.agent/skills/integrating-sentry/` | Complete Sentry instrumentation across Python (`sentry-sdk`), Next.js (`@sentry/nextjs`), and Node.js (`@sentry/node`) with safe DSN loading. |
-| **`managing-firebase`** | `.agent/skills/managing-firebase/` | Firebase project initialization, Firestore schemas, Cloud Functions, and Firebase MCP integrations. |
-| **`error-handling-patterns`** | `.agent/skills/error-handling-patterns/` | Fault-tolerant error propagation, Result types, structured logs, circuit breakers, and graceful degradation. |
+| **`building-backend`** | [`.agent/skills/building-backend/`](.agent/skills/building-backend/) | Production REST, GraphQL, gRPC APIs, database migrations, Redis caching, worker queues, and microservices. |
+| **`integrating-sentry`** | [`.agent/skills/integrating-sentry/`](.agent/skills/integrating-sentry/) | Complete Sentry APM across Python (`sentry-sdk`), Next.js (`@sentry/nextjs`), and Node.js (`@sentry/node`). |
+| **`managing-firebase`** | [`.agent/skills/managing-firebase/`](.agent/skills/managing-firebase/) | Firebase project setup, Firestore security rules, Cloud Functions, and Firebase MCP integrations. |
+| **`error-handling-patterns`** | [`.agent/skills/error-handling-patterns/`](.agent/skills/error-handling-patterns/) | Fault-tolerant error propagation, Result types, structured logging, circuit breakers, and graceful degradation. |
+| **`using-codex-cli`** | [`.agent/skills/using-codex-cli/`](.agent/skills/using-codex-cli/) | Headless execution, sandboxed non-interactive runs, and review pipelines with OpenAI Codex CLI. |
 
 ### 🎨 Frontend, UI/UX & Design Systems
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`ui-ux-pro-max`** | `.agent/skills/ui-ux-pro-max/` | Senior UI/UX design tokens, UX psychology laws (Fitts, Hick, Miller), storytelling layouts, and micro-interactions. |
-| **`designing-with-stitch`**| `.agent/skills/designing-with-stitch/` | Screen generation, responsive device layouts, and design system tokens using Google Stitch MCP. |
-| **`brand-identity`** | `.agent/skills/brand-identity/` | Design tokens, typography hierarchies, semantic color palettes, and brand voice guidelines. |
-| **`using-remotion`** | `.agent/skills/using-remotion/` | Programmatic motion graphics, data-driven animations, and video rendering using React & Remotion. |
-| **`archify`** | `.agent/skills/archify/` | Compiles architecture, workflow, sequence, ERD, and lifecycle models into interactive HTML diagrams with visual audits. |
+| **`ui-ux-pro-max`** | [`.agent/skills/ui-ux-pro-max/`](.agent/skills/ui-ux-pro-max/) | Senior UI/UX design tokens, UX psychology laws (Fitts, Hick, Miller), storytelling layouts, and micro-interactions. |
+| **`designing-with-stitch`**| [`.agent/skills/designing-with-stitch/`](.agent/skills/designing-with-stitch/) | Screen generation, responsive device layouts, and design system tokens using Google Stitch MCP. |
+| **`brand-identity`** | [`.agent/skills/brand-identity/`](.agent/skills/brand-identity/) | Design tokens, typography hierarchies, semantic color palettes, and voice/tone copywriting standards. |
+| **`using-remotion`** | [`.agent/skills/using-remotion/`](.agent/skills/using-remotion/) | Programmatic motion graphics, data-driven video composition, and rendering using React & Remotion. |
+| **`archify`** | [`.agent/skills/archify/`](.agent/skills/archify/) | Compiles architecture, workflow, sequence, ERD, and lifecycle models into standalone, interactive HTML diagrams. |
 
-### 📚 Documentation & Developer Intelligence
+### 📚 Intelligence, Docs & Knowledge Graph
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`graphify`** | `.agent/skills/graphify/` | Transforms codebases into queryable AST knowledge graphs (`graph.json`, `graph.html`); powers `/graphify query`, `path`, and `explain`. |
-| **`context7-mcp`** | `.agent/skills/context7-mcp/` | Fetches live, version-specific library docs and code snippets via Context7 MCP to eliminate hallucinated APIs. |
-| **`dev-browser`** | `.agent/skills/dev-browser/` | Persistent browser automation, end-to-end user flows, form filling, scraping, and visual testing. |
+| **`graphify`** | [`.agent/skills/graphify/`](.agent/skills/graphify/) | Transforms codebases into queryable AST knowledge graphs (`graph.json`, `graph.html`); powers `/graphify query`, `path`, and `explain`. |
+| **`context7-mcp`** | [`.agent/skills/context7-mcp/`](.agent/skills/context7-mcp/) | Live, versioned library docs and code snippets via Context7 MCP to eliminate hallucinated APIs. |
+| **`dev-browser`** | [`.agent/skills/dev-browser/`](.agent/skills/dev-browser/) | Persistent browser automation, end-to-end user flows, form filling, scraping, and visual testing. |
 
-### 🛡️ Security, Code Quality & Testing
+### 🛡️ Security, Governance & Testing
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`defend-what-you-ship`** | `.agent/skills/defend-what-you-ship/` | Human whiteboard ownership doctrine: dual-speed lanes (PoC vs Lane B), session handovers, zero-vibes verification, teach-back drills, and `docs/` scaffolding. |
-| **`security-audit`** | `.agent/skills/security-audit/` | Multi-agent adversarial security auditor (Cloudflare methodology): reconnaissance, coverage hunting across 10 attack classes, independent candidate validation, and verified findings. |
-| **`owasp-security`** | `.agent/skills/owasp-security/` | OWASP Top 10 mitigation, auth boundaries, strict input validation, secret hygiene, and SQLi/XSS defense. |
-| **`code-review`** | `.agent/skills/code-review/` | Senior code review auditing for correctness, security vulnerabilities, performance bottlenecks, and clean diffs. |
-| **`testing-code`** | `.agent/skills/testing-code/` | Automated test suite architecture across Unit, Integration, and E2E (Vitest, Jest, Pytest, Playwright). |
+| **`defend-what-you-ship`** | [`.agent/skills/defend-what-you-ship/`](.agent/skills/defend-what-you-ship/) | Human whiteboard defense: dual-speed lanes (PoC vs Lane B), session handovers, zero-vibes verification, teach-back drills. |
+| **`security-audit`** | [`.agent/skills/security-audit/`](.agent/skills/security-audit/) | Adversarial security auditor: reconnaissance, coverage hunting across 10 attack classes, and candidate verification. |
+| **`owasp-security`** | [`.agent/skills/owasp-security/`](.agent/skills/owasp-security/) | OWASP Top 10 mitigation, auth boundaries, strict input validation, secret hygiene, and SQLi/XSS defense. |
+| **`code-review`** | [`.agent/skills/code-review/`](.agent/skills/code-review/) | Senior code review auditing for correctness, security vulnerabilities, performance bottlenecks, and clean diffs. |
+| **`testing-code`** | [`.agent/skills/testing-code/`](.agent/skills/testing-code/) | Automated test architecture across Unit, Integration, and E2E tiers (Vitest, Jest, Pytest, Playwright). |
 
 ### ✂️ Simplicity & Anti-Overengineering (Ponytail Suite)
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`ponytail`** | `.agent/skills/ponytail/` | Enforces the shortest working solution: standard library first, zero speculative wrappers, YAGNI. |
-| **`ponytail-audit`** | `.agent/skills/ponytail-audit/` | Repository-wide scanner to identify bloated packages, duplicate utilities, and over-engineered layers. |
-| **`ponytail-review`** | `.agent/skills/ponytail-review/` | PR diff review focusing strictly on eliminating complexity and speculative flexibility. |
-| **`ponytail-debt`** | `.agent/skills/ponytail-debt/` | Harvests and tracks intentional shortcuts tagged with `// ponytail:` into a persistent ledger. |
-| **`ponytail-gain`** | `.agent/skills/ponytail-gain/` | Calculates metrics on deleted code, reduced dependencies, and improved execution speed. |
-| **`ponytail-help`** | `.agent/skills/ponytail-help/` | Quick-reference cheat sheet for all Ponytail commands, intensity tiers, and rules. |
+| **`ponytail`** | [`.agent/skills/ponytail/`](.agent/skills/ponytail/) | Forces the shortest working solution: standard library first, zero speculative wrappers, YAGNI. |
+| **`ponytail-audit`** | [`.agent/skills/ponytail-audit/`](.agent/skills/ponytail-audit/) | Whole-repo scan for over-engineering, dead flexibility, and redundant external dependencies. |
+| **`ponytail-review`** | [`.agent/skills/ponytail-review/`](.agent/skills/ponytail-review/) | Code review focused exclusively on cutting unnecessary abstractions and speculative layers. |
+| **`ponytail-debt`** | [`.agent/skills/ponytail-debt/`](.agent/skills/ponytail-debt/) | Harvests deliberate shortcuts tagged with `// ponytail:` into a persistent debt ledger. |
+| **`ponytail-gain`** | [`.agent/skills/ponytail-gain/`](.agent/skills/ponytail-gain/) | Quantifies benchmark impact: lines deleted, dependencies reduced, and execution speed gained. |
+| **`ponytail-help`** | [`.agent/skills/ponytail-help/`](.agent/skills/ponytail-help/) | Quick-reference card for Ponytail modes, intensity levels (lite, full, ultra), and rules. |
 
-### 🚀 Autonomous Build Pipelines & Orchestration
+### 🚀 Autonomous Delivery & Multi-Agent Squads
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`antigravity-agents`** | `.agent/skills/antigravity-agents/` | Orchestrates multi-agent squads (planners, coders, security, UI) running parallel workflows. |
-| **`unified-build-pipeline`**| `.agent/skills/unified-build-pipeline/` | End-to-end development loop: GSD (specifications) + Ralph Loop (stories) + CodeRabbit (reviews). |
-| **`ralph-loop`** | `.agent/skills/ralph-loop/` | Autonomous story execution loop processing `prd.json` with automated quality gates and browser checks. |
-| **`ralph-prd`** | `.agent/skills/ralph-prd/` | Generates standardized, machine-readable PRD JSON specifications ready for Ralph execution. |
+| **`antigravity-agents`** | [`.agent/skills/antigravity-agents/`](.agent/skills/antigravity-agents/) | Multi-agent squad orchestration (Commander, Architect, UI/UX, Backend, Security, Debugger). |
+| **`unified-build-pipeline`**| [`.agent/skills/unified-build-pipeline/`](.agent/skills/unified-build-pipeline/) | End-to-end development loop: GSD specs + Ralph autonomous loop + CodeRabbit quality review. |
+| **`ralph-loop`** | [`.agent/skills/ralph-loop/`](.agent/skills/ralph-loop/) | Deterministic story execution loop from `prd.json` with quality gates and browser verification. |
+| **`ralph-prd`** | [`.agent/skills/ralph-prd/`](.agent/skills/ralph-prd/) | Generates machine-readable Product Requirements Document (PRD) JSON for autonomous loops. |
 
-### ⚡ Get Shit Done (GSD Suite - 14 Sub-Skills)
+### ⚡ Spec-Driven Development (GSD Suite)
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`gsd`** | `.agent/skills/gsd/` | Master GSD methodology: planning lock, wave execution, state dumps, and empirical verification. |
-| **`gsd-planner`** | `.agent/skills/gsd-planner/` | Decomposes roadmaps into atomic phase plans (`PLAN.md`) with dependency waves. |
-| **`gsd-plan-checker`** | `.agent/skills/gsd-plan-checker/` | Validates plans before execution to catch scope creep, missing deps, and architectural flaws. |
-| **`gsd-executor`** | `.agent/skills/gsd-executor/` | Executes atomic tasks in dependency-ordered waves with git checkpointing. |
-| **`gsd-verifier`** | `.agent/skills/gsd-verifier/` | Independent empirical validation against must-haves using test commands and browser verification. |
-| **`gsd-debugger`** | `.agent/skills/gsd-debugger/` | Systematic, hypothesis-driven debugging on fresh contexts using the 3-strike protocol. |
-| **`gsd-codebase-mapper`** | `.agent/skills/gsd-codebase-mapper/`| Analyzes architecture, directory layouts, and dependencies into living map documents. |
-| **`gsd-subagent-delegation`**| `.agent/skills/gsd-subagent-delegation/`| Canonical protocol for delegating tasks to isolated subagents with branch workspace modes. |
-| **`gsd-context-fetch`** | `.agent/skills/gsd-context-fetch/` | Search-first methodology to prevent context bloat from reading unnecessary files. |
-| **`gsd-context-compressor`**| `.agent/skills/gsd-context-compressor/`| Compresses and summarizes working memory to maximize token efficiency. |
-| **`gsd-context-health-monitor`**| `.agent/skills/gsd-context-health-monitor/`| Monitors token complexity and triggers state persistence before degraded reasoning. |
-| **`gsd-token-budget`** | `.agent/skills/gsd-token-budget/` | Estimates and manages token allocations across planning, execution, and verification phases. |
-| **`gsd-empirical-validation`**| `.agent/skills/gsd-empirical-validation/`| Enforces proof requirements (test output, command exit code) before marking any task complete. |
+| **`gsd`** | [`.agent/skills/gsd/`](.agent/skills/gsd/) | Master Get Shit Done methodology: planning locks, state persistence, and empirical proof. |
+| **`gsd-planner`** | [`.agent/skills/gsd-planner/`](.agent/skills/gsd-planner/) | Decomposes roadmap phases into atomic `PLAN.md` specifications with wave dependencies. |
+| **`gsd-plan-checker`** | [`.agent/skills/gsd-plan-checker/`](.agent/skills/gsd-plan-checker/) | Pre-execution plan validation catching scope creep, missing deps, and architectural risks. |
+| **`gsd-executor`** | [`.agent/skills/gsd-executor/`](.agent/skills/gsd-executor/) | Executes atomic tasks in dependency-ordered waves with git checkpoint commits. |
+| **`gsd-verifier`** | [`.agent/skills/gsd-verifier/`](.agent/skills/gsd-verifier/) | Independent empirical validation against must-haves using test commands and browser checks. |
+| **`gsd-debugger`** | [`.agent/skills/gsd-debugger/`](.agent/skills/gsd-debugger/) | Systematic hypothesis-driven debugging on fresh contexts applying the 3-strike rule. |
+| **`gsd-codebase-mapper`** | [`.agent/skills/gsd-codebase-mapper/`](.agent/skills/gsd-codebase-mapper/) | Reverse-engineers codebase architecture into living `STACK.md` and `ARCHITECTURE.md` maps. |
+| **`gsd-subagent-delegation`**| [`.agent/skills/gsd-subagent-delegation/`](.agent/skills/gsd-subagent-delegation/) | Protocol for delegating subtasks to isolated subagents with branch workspace modes. |
+| **`gsd-context-fetch`** | [`.agent/skills/gsd-context-fetch/`](.agent/skills/gsd-context-fetch/) | Search-first methodology preventing context degradation from reading unnecessary files. |
+| **`gsd-context-compressor`**| [`.agent/skills/gsd-context-compressor/`](.agent/skills/gsd-context-compressor/) | Working memory compression strategies to maximize model reasoning fidelity. |
+| **`gsd-context-health-monitor`**| [`.agent/skills/gsd-context-health-monitor/`](.agent/skills/gsd-context-health-monitor/) | Monitors token complexity and triggers proactive state dumps before reasoning degrades. |
+| **`gsd-token-budget`** | [`.agent/skills/gsd-token-budget/`](.agent/skills/gsd-token-budget/) | Tracks token allocations across planning, execution, and verification phases. |
+| **`gsd-empirical-validation`**| [`.agent/skills/gsd-empirical-validation/`](.agent/skills/gsd-empirical-validation/) | Zero-vibes proof enforcement: requires exit codes, test outputs, or browser snapshots. |
 
 ### 📈 Product, Strategy & Growth
 | Skill | Directory | Core Capabilities |
 | :--- | :--- | :--- |
-| **`project-management`** | `.agent/skills/project-management/` | Creates PRDs, sprint planning sheets, roadmaps, and Linear/Jira/Notion tickets. |
-| **`gtm-strategy`** | `.agent/skills/gtm-strategy/` | Go-to-market launch playbooks, ICP personas, positioning narratives, and outreach sequences. |
-| **`seo-optimizer`** | `.agent/skills/seo-optimizer/` | Technical SEO, JSON-LD schemas, meta tags, search intent matching, and Core Web Vitals optimization. |
-| **`brainstorming-ideas`** | `.agent/skills/brainstorming-ideas/` | Divergent-convergent exploration of product features, user journeys, and technical designs. |
-| **`creating-skills`** | `.agent/skills/creating-skills/` | Meta-skill for authoring, structuring, and registering new skills into the ecosystem. |
+| **`project-management`** | [`.agent/skills/project-management/`](.agent/skills/project-management/) | Authoring PRDs, sprint planning sheets, roadmaps, and Linear/Jira/Notion tickets. |
+| **`gtm-strategy`** | [`.agent/skills/gtm-strategy/`](.agent/skills/gtm-strategy/) | Go-to-market launch playbooks, ICP buyer personas, positioning, and outreach sequences. |
+| **`seo-optimizer`** | [`.agent/skills/seo-optimizer/`](.agent/skills/seo-optimizer/) | Technical SEO, JSON-LD schemas, meta tags, search intent matching, and Core Web Vitals. |
+| **`brainstorming-ideas`** | [`.agent/skills/brainstorming-ideas/`](.agent/skills/brainstorming-ideas/) | Divergent-convergent exploration of product features, user flows, and technical designs. |
+| **`creating-skills`** | [`.agent/skills/creating-skills/`](.agent/skills/creating-skills/) | Meta-skill for authoring, structuring, testing, and registering new skills in the ecosystem. |
 
 ---
 
 ## 🔌 Namespaced Plugins
 
-Plugins bundle rules, skills, and tools into unified, autonomous modules located in `.agent/plugins/` (and globally in `~/.gemini/config/plugins/`):
+Plugins package complete domain capabilities (skills, instructions, and workflows) into standalone modules:
 
-> 📖 **Full Plugin Manual:** See [`PLUGINS_AND_MCP_README.md`](PLUGINS_AND_MCP_README.md) for deep-dive architecture, rule sets, and subagent delegation workflows.
-
-| Plugin | Purpose | Integrated Rules | Auth / Keys Required? |
+| Plugin | Core Purpose | Enforced Rules | Credentials Required? |
 | :--- | :--- | :--- | :---: |
-| **`coderabbit`** | Automated AI code reviews & security audits | Quality gates, input boundary validation, pre-commit checklists | ❌ None (Local Intelligence) |
-| **`gsd`** | Spec-driven autonomous execution | Planning lock, wave execution, context hygiene, empirical proof | ❌ None (Local Intelligence) |
-| **`ponytail`** | Extreme simplicity & anti-overengineering | YAGNI enforcement, standard library first, debt tracking | ❌ None (Local Intelligence) |
-| **`ralph`** | PRD generation and validation | Machine-readable schema, user story dependencies | ❌ None (Local Intelligence) |
-| **`ralph-loop`** | Deterministic test-driven build loop | Sequential story execution, quality gate checks, browser automation | ❌ None (Local Browser) |
+| **`coderabbit`** | Automated AI code reviews & security audits | Quality gates, input validation, pre-commit checklists | ❌ None (Local Intelligence) |
+| **`gsd`** | Spec-driven autonomous execution | Planning locks, wave commits, context hygiene, empirical proof | ❌ None (Local Intelligence) |
+| **`ponytail`** | Radical simplicity & anti-overengineering | YAGNI enforcement, standard library first, debt tracking | ❌ None (Local Intelligence) |
+| **`ralph`** | PRD generation and validation | Machine-readable schema, user story dependency analysis | ❌ None (Local Intelligence) |
+| **`ralph-loop`** | Deterministic test-driven build loop | Sequential story execution, quality gate checks, browser testing | ❌ None (Local Browser) |
 | **`unified-build-pipeline`** | End-to-end software delivery | Combines GSD planning + Ralph execution + CodeRabbit review | ❌ None (Local Pipeline) |
 
 ---
 
-## 🌐 Real-Time MCP Integrations & API Key Matrix
+## 🌐 Real-Time MCP Integrations
 
-This ecosystem comes pre-configured with 9 production-grade Model Context Protocol (MCP) integrations:
+Pre-configured in [`mcp.json`](mcp.json) with security validation and schema checks:
 
-> 📖 **Complete Setup Guide:** See [`PLUGINS_AND_MCP_README.md`](PLUGINS_AND_MCP_README.md) for exact setup commands, CLI login flows (`21st login`), and live JSON-RPC verification scripts.
+| Server Name | Protocol / Command | Auth Required? | Tier / Cost | Key Provider / Setup |
+| :--- | :--- | :---: | :--- | :--- |
+| **`shadcn`** | `npx -y shadcn@latest mcp` | ❌ **No** | Free & Open Source | Built-in (Local Execution) |
+| **`21st` (Magic UI)**| `npx -y @21st-dev/magic@latest` | ✅ **Yes** | Free Tier Available | Run `21st login` or [21st.dev/mcp](https://21st.dev/mcp) |
+| **`context7`** | `https://mcp.context7.com/mcp` | ✅ **Yes** | Free Tier Available | [context7.com](https://context7.com) (`Authorization: Bearer <KEY>`) |
+| **`StitchMCP`** | `npx -y mcp-remote ...` | ✅ **Yes** | Google Cloud / Stitch | [stitch.googleapis.com](https://stitch.googleapis.com) (`X-Goog-Api-Key: <KEY>`) |
+| **`chrome-devtools-mcp`**| `npx -y chrome-devtools-mcp@latest` | ❌ **No** | Free & Local | Local Chrome / Node (Zero-Config) |
+| **`playwright`** | `npx -y @playwright/mcp@latest` | ❌ **No** | Free & Local | Local Playwright (Zero-Config) |
+| **`github-mcp-server`** | `npx -y @modelcontextprotocol/server-github` | ✅ **Yes** | Free (GitHub Account) | [github.com/settings/tokens](https://github.com/settings/tokens) (`GITHUB_PERSONAL_ACCESS_TOKEN`) |
+| **`gmp-code-assist`** | `https://mapscodeassist.googleapis.com/mcp` | ⚠️ **Optional** | Google Cloud Tier | [console.cloud.google.com](https://console.cloud.google.com) (ADC / Header) |
+| **`firebase-mcp-server`**| `npx -y firebase-mcp-server` | ✅ **Yes** | Free Tier Available | Run `firebase login` (CLI OAuth) |
 
-### 🔑 Master API Key Requirements Table
+> 📖 See [**`PLUGINS_AND_MCP_README.md`**](PLUGINS_AND_MCP_README.md) for detailed configuration, permission policies, and troubleshooting.
 
-| Server Name | Command / Protocol | Auth Required? | Tier / Cost | Key Provider URL | Env Var / Header |
-| :--- | :--- | :---: | :--- | :--- | :--- |
-| **`shadcn`** | `npx -y shadcn@latest mcp` | ❌ **No** | Free & Open Source | Built-in | None (Local execution) |
-| **`21st` (Magic UI)**| `npx -y @21st-dev/magic@latest` | ✅ **Yes** | Free Tier Available | [21st.dev/mcp](https://21st.dev/mcp) | `API_KEY` / `21st login` |
-| **`context7`** | `https://mcp.context7.com/mcp` | ✅ **Yes** | Free Tier Available | [context7.com](https://context7.com) | `Authorization: Bearer <KEY>` |
-| **`StitchMCP`** | `npx -y mcp-remote ...` | ✅ **Yes** | Google Cloud / Stitch | [stitch.googleapis.com](https://stitch.googleapis.com) | `X-Goog-Api-Key: <KEY>` |
-| **`chrome-devtools-mcp`**| `npx -y chrome-devtools-mcp@latest` | ❌ **No** | Free & Local | Local Chrome / Node | None (Local DevTools) |
-| **`playwright`** | `npx -y @playwright/mcp@latest` | ❌ **No** | Free & Local | Local Playwright | None (Local Browser) |
-| **`github-mcp-server`** | `npx -y @modelcontextprotocol/server-github` | ✅ **Yes** | Free (GitHub Account) | [github.com/settings/tokens](https://github.com/settings/tokens) | `GITHUB_PERSONAL_ACCESS_TOKEN` |
-| **`gmp-code-assist`** | `https://mapscodeassist.googleapis.com/mcp` | ⚠️ **Optional** | Google Cloud Tier | [console.cloud.google.com](https://console.cloud.google.com) | Google ADC / Header |
-| **`firebase-mcp-server`**| `npx -y firebase-mcp-server` | ✅ **Yes** | Free Tier Available | [firebase.google.com](https://firebase.google.com) | `firebase login` (CLI OAuth) |
+---
 
-```json
-{
-  "mcpServers": {
-    "shadcn": {
-      "command": "npx",
-      "args": ["-y", "shadcn@latest", "mcp"]
-    },
-    "21st": {
-      "command": "npx",
-      "args": ["-y", "@21st-dev/magic@latest"],
-      "env": { "API_KEY": "YOUR_21ST_API_KEY" }
-    },
-    "context7": {
-      "serverUrl": "https://mcp.context7.com/mcp",
-      "headers": { "Authorization": "Bearer YOUR_CONTEXT7_API_KEY" }
-    },
-    "StitchMCP": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://stitch.googleapis.com/mcp", "--header", "X-Goog-Api-Key: YOUR_API_KEY"]
-    },
-    "chrome-devtools-mcp": {
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"]
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
-    },
-    "github-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT" }
-    }
-  }
-}
+## 💻 CLI Commands
+
+The ecosystem includes a cross-platform CLI tool in `bin/ai-ecosystem.js`:
+
+```bash
+# Run comprehensive environment and security diagnostics
+node bin/ai-ecosystem.js doctor
+# or
+npm run doctor
+
+# Install skills globally into user configuration stores
+node bin/ai-ecosystem.js install --global
+
+# Install skills into a target project repository
+node bin/ai-ecosystem.js install --target "C:\Projects\my-project"
+
+# Safely restore previous configuration from automated backup
+node bin/ai-ecosystem.js rollback
+
+# Cleanly uninstall ecosystem files without touching user project code
+node bin/ai-ecosystem.js uninstall
 ```
 
 ---
 
-## 🚦 Skill Loading Logic
+## 🔒 Security Hardening & Governance
 
-When user requests arrive, the AI dynamically resolves intent into the optimal skill chain:
+This repository adheres to enterprise DevSecOps standards and passed a full comprehensive security audit:
 
-```
-User Request
-    �
-    +-- 🎨 UI / Design / Mockup         --? designing-with-stitch + ui-ux-pro-max + brand-identity
-    +-- 🕸️ Codebase Graph / Architecture--? graphify + archify + gsd-codebase-mapper
-    +-- 📚 Library Docs / API Reference --? context7-mcp
-    +-- 🚨 Error Tracking / APM / Sentry--? integrating-sentry + error-handling-patterns
-    +-- 🛡️ Security / Whiteboard Defense--? defend-what-you-ship + security-audit + owasp-security + code-review
-    +-- 🛠️ Backend / API / Database     --? building-backend + integrating-sentry
-    +-- ✂️ Anti-Bloat / Minimal Code    --? ponytail
-    +-- 🚀 Full-Stack Autonomous Build  --? unified-build-pipeline (GSD + Ralph + CodeRabbit)
-    +-- 👥 Multi-Agent Squad            --? antigravity-agents
-    +-- 📋 PRD / Sprint / Roadmap       --? project-management
-    +-- 📈 Launch / SEO / GTM           --? gtm-strategy + seo-optimizer
-    +-- 💡 Authoring a New Skill        --? creating-skills
-```
+* **Zero Hardcoded Credentials:** Verified statically via automated regex scanners across 1,100+ files.
+* **Safe Path Traversal Protections:** Automated path guards reject UNC network shares, drive roots, and sensitive vaults (`.ssh`, `.aws`, `.gnupg`, `.kube`, `.git`).
+* **Non-Destructive Backups:** Timestamped backups created in `~/.gemini/backups/` before any filesystem write.
+* **Continuous Security Testing:** Native Node.js test suite with 19/19 passing security tests:
+  ```bash
+  npm run test:security
+  ```
+* **Vulnerability Reporting:** See [**`SECURITY.md`**](SECURITY.md) for responsible disclosure guidelines.
 
 ---
 
-## 🚀 One-Click Global Sync & Portability
+## 🤝 Contributing & Community
 
-The repository includes a portable installer to back up, sync, and deploy skills into any workspace on your machine.
-
-### 1. Sync All Skills Globally
-Stores and syncs all 42 skills and 6 plugins into your global agent stores (`~/.agent/` and `~/.gemini/global-skills/`):
-
-```powershell
-.\install-skills.ps1 store
-```
-
-### 2. Inject Skills into Any Project
-Install the entire ecosystem into any target project folder with a single command:
-
-```powershell
-# Install into current project
-.\install-skills.ps1 install
-
-# Or specify a target directory
-.\install-skills.ps1 install -TargetPath "C:\Projects\my-awesome-app"
-```
-
-Or on Windows:
-```cmd
-install-skills.bat
-```
+Contributions are welcome! Please follow these standards:
+1. Ensure all new skills follow the [`.agent/skills/creating-skills/`](.agent/skills/creating-skills/) specification.
+2. Maintain UTF-8 without BOM across all files.
+3. Run `npm run doctor` and `npm run test:security` before submitting pull requests.
 
 ---
 
-## 🤖 Using with OpenAI Codex CLI
-
-This repository is built for native, zero-config compatibility with **OpenAI Codex CLI**:
-
-1. **Global Access:** Once `install-skills.ps1 store` is run, Codex CLI automatically detects all skills from `~/.codex/skills/`.
-2. **Project Instructions (`CODEX.md`):** Automatically guides Codex CLI to load domain skills on-demand.
-3. **Headless Execution Example:**
-   ```bash
-   codex exec -s workspace-write --approve-for-me "Build a FastAPI authentication endpoint using owasp-security and integrating-sentry"
-   ```
-4. **Automated Code Review:**
-   ```bash
-   codex review
-   ```
-
----
-
-## 🛠️ Adding a New Skill
-
-To add a new skill to this repository:
-
-1. Read the specification guidelines in [`.agent/skills/creating-skills/SKILL.md`](.agent/skills/creating-skills/SKILL.md).
-2. Create the folder: `.agent/skills/<skill-name>/`.
-3. Create `SKILL.md` with standard YAML frontmatter (`name`, `description`).
-4. Register the new skill in [`CLAUDE.md`](CLAUDE.md) and [`README.md`](README.md).
-5. Run `.\install-skills.ps1 store` to push changes to your global registry.
-
----
-
-## 📜 Principles & Guidelines
-
-- **Simplicity First:** The fastest, most secure code is the code you never write. Standard library > third-party dependencies.
-- **Context Hygiene:** Keep prompts lean by loading only what is needed.
-- **Empirical Proof:** Never consider a task done without verified test runs, clean exit codes, or browser snapshots.
-- **Continuous Observability:** Instrument Sentry and comprehensive error handling on day one.
+<p align="center">
+  <strong>Built with ⚡ for the next generation of autonomous AI developers.</strong><br/>
+  <sub>Released under the <a href="LICENSE">MIT License</a>. Maintained by the community.</sub>
+</p>
