@@ -1,6 +1,6 @@
 {
   "name": "dr-skills",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Dr-SKILLs: Universal AI Developer Agent Ecosystem providing modular skills, plugins, MCP servers, and multi-agent governance rules for Google Antigravity, Claude Code, Cursor, and Codex.",
   "main": "security/index.js",
   "bin": {

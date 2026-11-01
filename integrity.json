@@ -1,12 +1,12 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "algorithm": "sha256",
   "description": "Cryptographic SHA-256 integrity manifest covering root governance files, all 54 skills, plugin manifests, and security rules.",
-  "generated_at": "2026-11-01T19:21:56.901Z",
-  "rootHash": "b3f74bce38b616fc4c9abc7b98903c8b90f00e176dcaaaef57e16ec2b5079ec0",
+  "generated_at": "2026-11-01T19:37:58.979Z",
+  "rootHash": "ac3f6fd8eaf50762440a575379c4ab863132f2554a22b09d75fa8a22f4c7c32a",
   "fileCount": 76,
   "files": {
-    "manifest.json": "8a5615d4780e162721281b1c6ca446d115d271c2da91c68b024a8ecfcb436820",
+    "manifest.json": "a2711812e227c83a8e611d06d6dd6035faf9dd93dbff0d9a9406bd91dc8e3b04",
     "mcp.json": "a0a2b3bd79a0ba37b2ad6da2ea927319f50a0c3578f9ca43cb44c4521fa076f5",
     "GEMINI.md": "12bfdd72d24bb49689823eaa55ddc2f8085c29d58c9539b8d8e5a2ea2a120de1",
     "AGENTS.md": "a1f73607e746755a5fd023b7166416a8af99a61f2bd8c849b2718e15e13713c0",
