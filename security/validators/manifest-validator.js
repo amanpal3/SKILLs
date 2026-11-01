@@ -46,7 +46,14 @@ function validateManifest(manifestPath, repoRoot) {
   if (!data.version || typeof data.version !== 'string') errors.push('manifest.json: "version" must be a non-empty string.');
   if (!Array.isArray(data.skills)) errors.push('manifest.json: "skills" must be an array.');
 
-  // 2. Skill directory verification
+  // Check declared count sync if provided
+  if (data.skills_count !== undefined && Array.isArray(data.skills)) {
+    if (data.skills_count !== data.skills.length) {
+      errors.push(`manifest.json: "skills_count" (${data.skills_count}) does not match skills array length (${data.skills.length}).`);
+    }
+  }
+
+  // 2. Skill directory and metadata verification
   const skillsDir = path.join(root, '.agent', 'skills');
   const detectedSkills = fs.existsSync(skillsDir)
     ? fs.readdirSync(skillsDir, { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)
@@ -66,15 +73,40 @@ function validateManifest(manifestPath, repoRoot) {
       } else {
         const skillDoc = path.join(skillPath, 'SKILL.md');
         if (!fs.existsSync(skillDoc)) {
-          warnings.push(`Skill "${skill}" lacks a SKILL.md instruction file.`);
+          errors.push(`Skill "${skill}" lacks a required SKILL.md instruction file.`);
+        } else {
+          // Validate YAML frontmatter
+          try {
+            const docContent = fs.readFileSync(skillDoc, 'utf8');
+            const fmMatch = docContent.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+            if (!fmMatch) {
+              errors.push(`Skill "${skill}" SKILL.md is missing valid YAML frontmatter (--- ... ---).`);
+            } else {
+              const nameMatch = fmMatch[1].match(/^name:\s*(.+)$/m);
+              const descMatch = fmMatch[1].match(/^description:\s*(.+)$/m);
+              if (!nameMatch || !nameMatch[1].trim()) {
+                errors.push(`Skill "${skill}" SKILL.md frontmatter lacks a valid "name" field.`);
+              } else {
+                const parsedName = nameMatch[1].trim().replace(/^['"]|['"]$/g, '');
+                if (parsedName !== skill) {
+                  errors.push(`Skill "${skill}" directory name does not match frontmatter name "${parsedName}".`);
+                }
+              }
+              if (!descMatch || !descMatch[1].trim()) {
+                errors.push(`Skill "${skill}" SKILL.md frontmatter lacks a non-empty "description" field.`);
+              }
+            }
+          } catch (readErr) {
+            errors.push(`Failed to read SKILL.md for skill "${skill}": ${readErr.message}`);
+          }
         }
       }
     }
 
-    // Check for orphaned skill directories not in manifest
+    // Fail CI when filesystem contains skills not registered in manifest.json
     for (const dirName of detectedSkills) {
       if (!skillSet.has(dirName)) {
-        warnings.push(`Filesystem directory ".agent/skills/${dirName}" is not registered in manifest.json`);
+        errors.push(`Undeclared skill: Filesystem directory ".agent/skills/${dirName}" is not registered in manifest.json`);
       }
     }
   }

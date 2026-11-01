@@ -116,6 +116,19 @@ export async function serve(options: ServeOptions = {}): Promise<DevBrowserServe
   const app: Express = express();
   app.use(express.json());
 
+  // Security Guard: Optional Bearer authentication
+  const expectedAuthToken = process.env.DEV_BROWSER_TOKEN;
+  if (expectedAuthToken) {
+    app.use((req: Request, res: Response, next) => {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || authHeader !== `Bearer ${expectedAuthToken}`) {
+        res.status(401).json({ error: "Unauthorized: Invalid or missing bearer token." });
+        return;
+      }
+      next();
+    });
+  }
+
   // GET / - server info
   app.get("/", (_req: Request, res: Response) => {
     const response: ServerInfoResponse = { wsEndpoint };
@@ -191,8 +204,9 @@ export async function serve(options: ServeOptions = {}): Promise<DevBrowserServe
   });
 
   // Start the server
-  const server = app.listen(port, () => {
-    console.log(`HTTP API server running on port ${port}`);
+  // Bind strictly to loopback interface (127.0.0.1) to prevent unauthorized local-network access
+  const server = app.listen(port, "127.0.0.1", () => {
+    console.log(`HTTP API server running on http://127.0.0.1:${port}`);
   });
 
   // Track active connections for clean shutdown

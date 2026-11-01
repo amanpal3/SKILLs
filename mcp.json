@@ -3,7 +3,7 @@
   "mcpServers": {
     "shadcn": {
       "command": "npx",
-      "args": ["-y", "shadcn@latest", "mcp"],
+      "args": ["-y", "shadcn@4.23.0", "mcp"],
       "description": "Official shadcn/ui component & block registry installer"
     },
     "context7": {
@@ -12,27 +12,27 @@
     },
     "StitchMCP": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://stitch.googleapis.com/mcp"],
+      "args": ["-y", "mcp-remote@0.15.2", "https://stitch.googleapis.com/mcp"],
       "description": "Google Stitch UI/UX design generation and design system tokens"
     },
     "chrome-devtools-mcp": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "args": ["-y", "chrome-devtools-mcp@1.12.0"],
       "description": "Chrome DevTools Protocol automation and Lighthouse audits"
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": ["-y", "@playwright/mcp@0.0.84"],
       "description": "Headless browser automation and end-to-end DOM tests"
     },
     "github": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "args": ["-y", "@modelcontextprotocol/server-github@2025.4.8"],
       "description": "GitHub repository, pull request, and issue management"
     },
     "21st": {
       "command": "npx",
-      "args": ["-y", "@21st-dev/magic@latest"],
+      "args": ["-y", "@21st-dev/magic@0.2.3"],
       "env": {
         "API_KEY": "YOUR_21ST_API_KEY"
       },

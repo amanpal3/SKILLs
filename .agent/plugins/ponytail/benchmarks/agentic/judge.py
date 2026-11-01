@@ -38,7 +38,13 @@ RUBRIC = (
     "Respond with ONLY this JSON: {\"over_engineering\": <0-3 int>, \"why\": \"<one line>\", \"cite\": \"<construct or none>\"}"
 )
 
-def load_key():
+def load_key(allow_network=False):
+    # Safety Guard: refuse automatic .env reading and outbound network calls without explicit consent
+    if not allow_network and os.environ.get("BENCHMARK_ALLOW_NETWORK") != "1":
+        raise PermissionError(
+            "Safety Guard: Outbound LLM benchmark calls and automatic .env reading are disabled by default. "
+            "To run live benchmarks, set BENCHMARK_ALLOW_NETWORK=1 or pass --allow-network."
+        )
     try:
         for line in (ROOT / ".env").read_text(encoding="utf-8").splitlines():
             if line.startswith("ANTHROPIC_API_KEY=") and len(line) > 18:
@@ -171,9 +177,13 @@ def run(run_dir, key):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--allow-network", action="store_true", help="Explicitly allow live LLM network calls and .env reads")
     ap.add_argument("--run", help="run dir to judge")
     args = ap.parse_args()
-    key = load_key()
+    try:
+        key = load_key(allow_network=args.allow_network)
+    except PermissionError as pe:
+        sys.exit(f"\n[BLOCKED] {pe}\n")
     if not key: sys.exit("no ANTHROPIC_API_KEY (.env or env)")
     if args.selftest: sys.exit(selftest(key))
     if args.run:

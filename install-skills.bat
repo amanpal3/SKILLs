@@ -1,7 +1,7 @@
 @echo off
 REM ============================================================
-REM Quick launcher for install-skills.ps1
-REM Double-click this file or run from any project folder
+REM Dr-SKILLs 🩺⚡ — Portable Installer Launcher
+REM Watermark: Curated by Aman Pal • MIT License
 REM ============================================================
 REM Usage:
 REM   install-skills.bat                    → Save & install all skills globally (default)

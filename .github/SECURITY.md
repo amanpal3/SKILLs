@@ -57,7 +57,7 @@ For fork maintainers and team deployments, we enforce:
 If you discover a potential security vulnerability or secret leak within this repository:
 
 1. **Do NOT open a public issue.**
-2. Please report the issue privately through **[GitHub Private Vulnerability Reporting](https://github.com/amanpal3/SKILLs/security/advisories/new)** or contact the repository maintainer directly.
+2. Please report the issue privately through **[GitHub Private Vulnerability Reporting](https://github.com/amanpal3/Dr-SKILLs/security/advisories/new)** or contact the repository maintainer directly.
 3. Include:
    - Description of the vulnerability
    - Affected skill, plugin, or script

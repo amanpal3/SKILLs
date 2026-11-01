@@ -1,5 +1,5 @@
 # ============================================================
-# .gitignore — Enterprise Security & Artifact Exclusions
+# .gitignore â€” Enterprise Security & Artifact Exclusions
 # ============================================================
 
 # --- 1. Environment Variables & Secrets ---
@@ -56,6 +56,7 @@ pnpm-debug.log*
 *~
 *.swp
 *.swo
+*.tgz
 
 # --- 6. Python Virtual Environments & Cache ---
 __pycache__/
@@ -88,6 +89,8 @@ desktop.ini
 *.sublime-project
 *.sublime-workspace
 
-# Temporary archify files
+# Temporary archify and graphify files
 .archify-remove-*
+graphify-out/
+*.bak_*
 

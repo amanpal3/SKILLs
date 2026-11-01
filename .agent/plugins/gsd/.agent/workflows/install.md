@@ -52,10 +52,58 @@ If user chooses Reinstall, continue to Step 2.
 
 ---
 
-## 2. Clone from GitHub
+## 2. Clone from GitHub (Pinned Immutable Release)
+
+To prevent supply-chain attacks and unvetted remote code execution, always clone and check out a pinned release commit SHA:
+
+**Bash:**
+```bash
+GSD_PINNED_COMMIT="5b7762fd6f5ad5119a6f591fa943c48b6ab6028a"
+git clone https://github.com/toonight/get-shit-done-for-antigravity.git .gsd-install-temp
+cd .gsd-install-temp
+git checkout "$GSD_PINNED_COMMIT"
+
+# Verify commit hash matches expected release digest
+ACTUAL_COMMIT=$(git rev-parse HEAD)
+if [ "$ACTUAL_COMMIT" != "$GSD_PINNED_COMMIT" ]; then
+    echo "Security Error: Commit SHA mismatch ($ACTUAL_COMMIT != $GSD_PINNED_COMMIT). Aborting install."
+    cd ..
+    rm -rf .gsd-install-temp
+    exit 1
+fi
+cd ..
+```
+
+**PowerShell:**
+```powershell
+$GsdPinnedCommit = "5b7762fd6f5ad5119a6f591fa943c48b6ab6028a"
+git clone https://github.com/toonight/get-shit-done-for-antigravity.git .gsd-install-temp
+Push-Location .gsd-install-temp
+git checkout $GsdPinnedCommit
+$actualCommit = (git rev-parse HEAD).Trim()
+if ($actualCommit -ne $GsdPinnedCommit) {
+    Pop-Location
+    Remove-Item -Recurse -Force .gsd-install-temp
+    throw "Security Error: Commit SHA mismatch ($actualCommit != $GsdPinnedCommit). Aborting install."
+}
+Pop-Location
+```
+
+---
+
+## 2.5 Security Review & Diff Gate
+
+Inspect incoming files before copying into the active workspace. Never install unreviewed binary executables or unknown scripts:
 
 ```bash
-git clone --depth 1 https://github.com/toonight/get-shit-done-for-antigravity.git .gsd-install-temp
+# Verify no untrusted binaries or scripts exist in incoming payload
+git -C .gsd-install-temp diff HEAD~1 --stat
+```
+
+Prompt the user:
+```
+Incoming GSD release verified against pinned commit: 5b7762fd6f5ad5119a6f591fa943c48b6ab6028a.
+Proceed with synchronizing verified files to workspace? (y/n)
 ```
 
 ---

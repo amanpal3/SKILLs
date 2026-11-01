@@ -31,11 +31,40 @@ fi
 
 ---
 
-## 2. Fetch Latest from GitHub
+## 2. Fetch Pinned Release from GitHub
 
+To prevent unvetted remote code execution, fetch and check out a vetted, pinned release commit SHA:
+
+**Bash:**
 ```bash
-# Clone latest to temp directory
-git clone --depth 1 https://github.com/toonight/get-shit-done-for-antigravity.git .gsd-update-temp
+GSD_PINNED_COMMIT="5b7762fd6f5ad5119a6f591fa943c48b6ab6028a"
+git clone https://github.com/toonight/get-shit-done-for-antigravity.git .gsd-update-temp
+cd .gsd-update-temp
+git checkout "$GSD_PINNED_COMMIT"
+
+ACTUAL_COMMIT=$(git rev-parse HEAD)
+if [ "$ACTUAL_COMMIT" != "$GSD_PINNED_COMMIT" ]; then
+    echo "Security Error: Commit SHA mismatch ($ACTUAL_COMMIT != $GSD_PINNED_COMMIT). Aborting update."
+    cd ..
+    rm -rf .gsd-update-temp
+    exit 1
+fi
+cd ..
+```
+
+**PowerShell:**
+```powershell
+$GsdPinnedCommit = "5b7762fd6f5ad5119a6f591fa943c48b6ab6028a"
+git clone https://github.com/toonight/get-shit-done-for-antigravity.git .gsd-update-temp
+Push-Location .gsd-update-temp
+git checkout $GsdPinnedCommit
+$actualCommit = (git rev-parse HEAD).Trim()
+if ($actualCommit -ne $GsdPinnedCommit) {
+    Pop-Location
+    Remove-Item -Recurse -Force .gsd-update-temp
+    throw "Security Error: Commit SHA mismatch ($actualCommit != $GsdPinnedCommit). Aborting update."
+}
+Pop-Location
 ```
 
 ---

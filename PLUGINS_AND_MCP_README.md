@@ -7,16 +7,19 @@
 ## 🌍 Core Doctrine: Global Installation
 
 > [!IMPORTANT]
-> **All 47 skills, 6 plugins, and governance rules in this repository are installed GLOBALLY upon running the installer.**
-> 
-> You do **not** need to manually copy or reinstall skills into every repository or workspace. Once installed, every project on your machine running Google Antigravity, Claude Code, Cursor, Windsurf, or OpenAI Codex CLI automatically discovers and accesses the entire ecosystem from your user home directory:
+> **All 54 skills, 6 plugins, and governance rules in this repository are installed GLOBALLY upon running the installer.**
+>
+> You do **not** need to manually copy or reinstall skills into every repository or workspace. Once installed globally, supported global coding agents (Google Antigravity, Claude Code, Cursor, and OpenAI Codex CLI) automatically discover and access the entire ecosystem from your user home directory:
 >
 > - **Google Antigravity Global Skills:** `~/.gemini/config/skills/`
 > - **Google Antigravity Global Plugins:** `~/.gemini/config/plugins/`
 > - **Google Antigravity Global Rules:** `~/.gemini/config/rules/` and `~/.gemini/GEMINI.md`
-> - **Universal Agent Standards:** `~/.agent/skills/` and `~/.agents/skills/`
-> - **OpenAI Codex CLI:** `~/.codex/skills/`
+> - **Universal Agent Standards (Claude Code / Cursor):** `~/.agent/skills/` and `~/.agent/rules/`
+> - **OpenAI Codex CLI:** `~/.codex/skills/` and `~/.codex/rules/`
 > - **Centralized Archive:** `~/.gemini/global-skills/`
+>
+> 💡 **Project-Level Installation for Windsurf, Copilot & Other Editors:**
+> For repository-level agents that discover skills inside the workspace (e.g., Windsurf, GitHub Copilot, Trae, RooCode, Kiro, Continue), run `npx -y dr-skills install ./my-project` to deploy the ecosystem directly into `<project>/.agent/skills/` and `<project>/.agent/rules/`.
 
 ---
 
@@ -27,8 +30,8 @@ Clone the repository and run the automated installer:
 ### In PowerShell (Windows):
 ```powershell
 # 1. Clone repository
-git clone https://github.com/amanpal3/SKILLs.git
-cd SKILLs
+git clone https://github.com/amanpal3/Dr-SKILLs.git
+cd Dr-SKILLs
 
 # 2. Store & install globally (syncs to all agent paths across the entire machine)
 powershell -ExecutionPolicy Bypass -File .\install-skills.ps1 store
@@ -56,7 +59,7 @@ Below is the definitive requirements table for all MCP servers, plugins, and ser
 
 | Server / Component | Category | Auth Required? | Cost / Tier | Provider / Signup URL | Environment Variable / Header | Configuration Location |
 | :--- | :--- | :---: | :--- | :--- | :--- | :--- |
-| **`shadcn`** | MCP Server | ❌ **No** | 100% Free & Open Source | Built into `shadcn@latest` | None (Local execution) | `mcp_config.json` |
+| **`shadcn`** | MCP Server | ❌ **No** | 100% Free & Open Source | Built into `shadcn@4.23.0` | None (Local execution) | `mcp_config.json` |
 | **`21st` (Magic UI)** | MCP Server | ✅ **Yes** | Free Tier Available | [21st.dev/mcp](https://21st.dev/mcp) | `API_KEY` / `API_KEY_21ST` / `TWENTYFIRST_TOKEN` | `mcp_config.json` or `~/.config/21st/auth.json` |
 | **`context7`** | MCP Server | ✅ **Yes** | Free Tier Available | [context7.com](https://context7.com) | `Authorization: Bearer <KEY>` | `mcp_config.json` headers |
 | **`StitchMCP`** | MCP Server | ✅ **Yes** | Google Cloud / Stitch Preview | [stitch.googleapis.com](https://stitch.googleapis.com) | `X-Goog-Api-Key: <KEY>` | `mcp_config.json` args |
@@ -113,7 +116,7 @@ Plugins package **Rules (`rules/`)**, **Skills (`skills/`)**, and **Playbooks** 
 ### 5. `unified-build-pipeline`
 * **Directory:** `.agent/plugins/unified-build-pipeline/`
 * **Integrated Skills:** Unifies `gsd` + `ralph-loop` + `coderabbit`.
-* **Execution Flow:** 
+* **Execution Flow:**
   1. Spec Lock (`.gsd/SPEC.md` + `.gsd/PLAN.md`)
   2. Deterministic story loop (`prd.json` via Ralph)
   3. Pre-commit CodeRabbit review audit before each commit.
@@ -128,11 +131,11 @@ Model Context Protocol (MCP) provides standard JSON-RPC interfaces so AI agents 
 
 Antigravity and AI coding agents read MCP servers from two locations:
 
-1. **Global Configuration:** `~/.gemini/config/mcp_config.json`  
+1. **Global Configuration:** `~/.gemini/config/mcp_config.json`
    *(User-level configuration file; stores your private API keys safely without committing them to git).*
-2. **Project-level Configuration:** `mcp.json`  
+2. **Project-level Configuration:** `mcp.json`
    *(Workspace-level file committed to Git; uses placeholders like `"YOUR_API_KEY"` to prevent credential leaks).*
-3. **Tool Schema Cache:** `~/.gemini/antigravity-cli/mcp/<serverName>/`  
+3. **Tool Schema Cache:** `~/.gemini/antigravity-cli/mcp/<serverName>/`
    *(Stores cached JSON schemas for tools so agents know arguments and descriptions).*
 
 ---
@@ -147,12 +150,12 @@ Antigravity and AI coding agents read MCP servers from two locations:
   "shadcn": {
     "$typeName": "exa.cascade_plugins_pb.CascadePluginCommandTemplate",
     "command": "npx",
-    "args": ["-y", "shadcn@latest", "mcp"]
+    "args": ["-y", "shadcn@4.23.0", "mcp"]
   }
   ```
 * **Verify:**
   ```bash
-  npx -y shadcn@latest mcp
+  npx -y shadcn@4.23.0 mcp
   ```
 
 ---
@@ -175,7 +178,7 @@ Antigravity and AI coding agents read MCP servers from two locations:
   "21st": {
     "$typeName": "exa.cascade_plugins_pb.CascadePluginCommandTemplate",
     "command": "npx",
-    "args": ["-y", "@21st-dev/magic@latest"],
+    "args": ["-y", "@21st-dev/magic@0.2.3"],
     "env": {
       "API_KEY": "YOUR_21ST_TOKEN_HERE",
       "API_KEY_21ST": "YOUR_21ST_TOKEN_HERE"
@@ -210,7 +213,7 @@ Antigravity and AI coding agents read MCP servers from two locations:
     "command": "npx",
     "args": [
       "-y",
-      "mcp-remote",
+      "mcp-remote@0.15.2",
       "https://stitch.googleapis.com/mcp",
       "--header",
       "X-Goog-Api-Key: YOUR_STITCH_API_KEY"
@@ -228,7 +231,7 @@ Antigravity and AI coding agents read MCP servers from two locations:
   "chrome-devtools-mcp": {
     "$typeName": "exa.cascade_plugins_pb.CascadePluginCommandTemplate",
     "command": "npx",
-    "args": ["-y", "chrome-devtools-mcp@latest"]
+    "args": ["-y", "chrome-devtools-mcp@1.12.0"]
   }
   ```
 
@@ -241,7 +244,7 @@ Antigravity and AI coding agents read MCP servers from two locations:
   ```json
   "playwright": {
     "command": "npx",
-    "args": ["-y", "@playwright/mcp@latest"],
+    "args": ["-y", "@playwright/mcp@0.0.84"],
     "disabled": false
   }
   ```
@@ -275,7 +278,7 @@ You can verify that your MCP servers are active and answering JSON-RPC calls wit
 ```bash
 node -e "
 const { spawn } = require('child_process');
-const child = spawn('npx', ['-y', 'shadcn@latest', 'mcp'], { shell: true });
+const child = spawn('npx', ['-y', 'shadcn@4.23.0', 'mcp'], { shell: true });
 child.stdout.on('data', d => console.log('Response:', d.toString()));
 setTimeout(() => {
   child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_add_command_for_items', arguments: { items: ['button'] } } }) + '\n');
@@ -283,7 +286,7 @@ setTimeout(() => {
 setTimeout(() => child.kill(), 6000);
 "
 ```
-*Expected Output:* `{"content":[{"type":"text","text":"npx shadcn@latest add button"}]}`
+*Expected Output:* `{"content":[{"type":"text","text":"npx shadcn@4.23.0 add button"}]}`
 
 ---
 
@@ -293,7 +296,7 @@ node -e "
 const fs = require('fs');
 const { spawn } = require('child_process');
 const auth = JSON.parse(fs.readFileSync(process.env.USERPROFILE + '/.config/21st/auth.json', 'utf8'));
-const child = spawn('npx', ['-y', '@21st-dev/magic@latest'], { env: { ...process.env, API_KEY: auth.token }, shell: true });
+const child = spawn('npx', ['-y', '@21st-dev/magic@0.2.3'], { env: { ...process.env, API_KEY: auth.token }, shell: true });
 child.stdout.on('data', d => console.log('Response:', d.toString()));
 setTimeout(() => {
   child.stdin.write(JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'search', arguments: { query: 'button' } } }) + '\n');

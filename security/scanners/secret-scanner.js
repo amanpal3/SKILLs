@@ -1,22 +1,24 @@
 /**
  * secret-scanner.js
  * Comprehensive static secret and credential detection scanner.
- * Scans directories safely, masking sensitive values in reports.
+ * Scans directories safely without following symlinks, supports multiple tokens per line,
+ * and detects modern OpenAI and API credentials.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const SECRET_PATTERNS = [
-  { name: 'GitHub Classic Token', re: /ghp_[a-zA-Z0-9]{30,}/g },
-  { name: 'GitHub Fine-grained PAT', re: /github_pat_[a-zA-Z0-9_]{30,}/g },
-  { name: 'OpenAI Secret Key', re: /sk-[a-zA-Z0-9]{20,}/g },
-  { name: 'Context7 Secret Key', re: /ctx7sk-[a-zA-Z0-9_-]{20,}/g },
-  { name: '21st Secret Key', re: /21st_sk_[a-zA-Z0-9_]{20,}/g },
-  { name: 'Google Cloud API Key', re: /AIza[0-9A-Za-z-_]{35}/g },
-  { name: 'AWS Access Key ID', re: /AKIA[0-9A-Z]{16}/g },
+  { name: 'GitHub Classic Token', re: /\bghp_[a-zA-Z0-9]{30,}\b/g },
+  { name: 'GitHub Fine-grained PAT', re: /\bgithub_pat_[a-zA-Z0-9_]{30,}\b/g },
+  { name: 'OpenAI Secret Key', re: /\b(?:sk-proj-[a-zA-Z0-9_\-]{20,}|sk-[a-zA-Z0-9]{20,})\b/g },
+  { name: 'Anthropic Secret Key', re: /\bsk-ant-api[0-9a-zA-Z_\-]{20,}\b/g },
+  { name: 'Context7 Secret Key', re: /\bctx7sk-[a-zA-Z0-9_-]{20,}\b/g },
+  { name: '21st Secret Key', re: /\b21st_sk_[a-zA-Z0-9_]{20,}\b/g },
+  { name: 'Google Cloud API Key', re: /\bAIza[0-9A-Za-z-_]{35}\b/g },
+  { name: 'AWS Access Key ID', re: /\bAKIA[0-9A-Z]{16}\b/g },
   { name: 'Private Key Header', re: /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/g },
-  { name: 'Slack Bot Token', re: /xoxb-[0-9]{10,}-[a-zA-Z0-9]+/g }
+  { name: 'Slack Bot Token', re: /\bxoxb-[0-9]{10,}-[a-zA-Z0-9]+\b/g }
 ];
 
 const IGNORED_DIRS = new Set([
@@ -32,6 +34,8 @@ const IGNORED_DIRS = new Set([
 
 /**
  * Scans a target directory or file for credentials.
+ * Does NOT follow symlinks or junctions to prevent directory escape.
+ *
  * @param {string} targetPath - Root directory or file to scan
  * @returns {{ findings: Array<{ file: string, line: number, pattern: string, preview: string }>, scannedFiles: number }}
  */
@@ -42,11 +46,26 @@ function scanForSecrets(targetPath) {
 
   function traverse(itemPath) {
     if (!fs.existsSync(itemPath)) return;
-    const stat = fs.statSync(itemPath);
+
+    // Use lstatSync to detect symlinks and junctions before following
+    const stat = fs.lstatSync(itemPath);
+
+    if (stat.isSymbolicLink()) {
+      // Security guard: strictly skip symlinks and junctions to avoid following outside links
+      return;
+    }
+
+    // Verify realpath remains within root boundary
+    const realPath = fs.realpathSync(itemPath);
+    const relToRoot = path.relative(root, realPath);
+    if (relToRoot.startsWith('..') || (path.isAbsolute(relToRoot) && relToRoot !== root)) {
+      return;
+    }
 
     if (stat.isDirectory()) {
       const dirName = path.basename(itemPath);
       if (IGNORED_DIRS.has(dirName) || dirName.startsWith('.bak_')) return;
+
       const entries = fs.readdirSync(itemPath);
       for (const entry of entries) {
         traverse(path.join(itemPath, entry));
@@ -67,8 +86,9 @@ function scanForSecrets(targetPath) {
           const lineText = lines[i];
           for (const pattern of SECRET_PATTERNS) {
             pattern.re.lastIndex = 0;
-            const match = pattern.re.exec(lineText);
-            if (match) {
+            let match;
+            // Capture ALL matches per line (not just the first one)
+            while ((match = pattern.re.exec(lineText)) !== null) {
               const matchedStr = match[0];
               const masked = matchedStr.length > 8
                 ? matchedStr.slice(0, 4) + '...' + matchedStr.slice(-4)

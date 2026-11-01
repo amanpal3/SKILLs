@@ -43,6 +43,13 @@ All skills live in: `.agent/skills/`
 | **Context7 MCP**            | `context7-mcp/`            | Fetching up-to-date, version-specific library docs and code examples directly via Context7 MCP       |
 | **Integrating Sentry**     | `integrating-sentry/`      | Configuring Sentry error tracking, distributed tracing, DSNs, and alerting across platforms          |
 | **Using Codex CLI**         | `using-codex-cli/`         | Orchestrating Codex CLI for autonomous execution, reviews, and cross-agent workflows                 |
+| **Humanizer**               | `humanizer/`               | Editing AI-generated prose to remove robotic tells, staged openers, and em dashes without fact loss  |
+| **Design System**           | `design-system/`           | Architecting 3-layer tokens (primitive → semantic → component), CSS variables, typography scales      |
+| **UI Styling**              | `ui-styling/`              | Styling components with Tailwind CSS, shadcn/ui, responsive layouts, and accessible interaction states|
+| **Brand Voice**             | `brand/`                   | Corporate brand identity, messaging frameworks, asset governance, and compliance guidelines         |
+| **Visual Design**           | `design/`                  | Comprehensive design: 55 logo styles, CIP corporate identity deliverables, SVG icons, social graphics|
+| **HTML Slides**             | `slides/`                  | Interactive responsive presentations with Chart.js, structured slide decks, and storytelling formulas |
+| **Banner Design**           | `banner-design/`           | High-converting banners, ad creatives, website heroes across Facebook, X, LinkedIn, Instagram, Google|
 
 ---
 
@@ -71,6 +78,7 @@ User Prompt
 - **No skipping error handling** — Every external call must handle failures.
 - **Always use Sentry** — Instrument Sentry for error tracking, exception capture, and observability across applications and services.
 - **No shipping without a checklist** — Use the relevant skill's review/audit checklist before marking work as done.
+- **Enforce Vibe-Coded Security Rules** — Follow [`.agent/rules/VIBE_SECURITY.md`](.agent/rules/VIBE_SECURITY.md): verify server-side auth, parameterized SQL, RLS on database tables, token cookies, and zero client-leaked secrets.
 - **Forward slashes in all paths** — Use `/` not `\` in all file references.
 
 ---

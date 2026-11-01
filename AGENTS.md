@@ -82,3 +82,12 @@ Whenever the user requests a squad, multi-agent workflow, complex pipeline, or m
 ## 🛡️ Empirical Proof & Verification Gate
 * **No "Trust Me":** Never mark any coding task complete without empirical verification (test output, command exit code, or browser snapshot).
 * **Security Guardrail:** Verify strict input validation, auth boundaries, and ensure zero hardcoded secrets exist before any commit.
+
+---
+
+## 🔒 Vibe-Coded Security & Production Rules (`VIBE_SECURITY.md`)
+Enforce these invariant rules across all code generation, APIs, and reviews:
+* **Injection & Input:** Never trust frontend; parameterized SQL only; sanitize HTML (`DOMPurify`); validate file magic bytes; block internal/private IPs on SSRF-prone fetches.
+* **Auth & Access:** Enforce RLS on every Postgres/Supabase table; verify auth inside every API route; eliminate IDOR/BOLA by scoping queries to `user_id`/`tenant_id`; protect public routes with rate limiting; hash passwords with Argon2id/bcrypt; enforce server-side RBAC on admin endpoints.
+* **Secrets & Tokens:** Use 256-bit JWT secrets; never leak server secrets to client (`NEXT_PUBLIC_` / `VITE_`); store auth tokens in `httpOnly, Secure, SameSite=Lax` cookies; remove default credentials.
+* **Config & Hygiene:** Strict CORS origin whitelist; verify webhook HMAC signatures with `timingSafeEqual`; disable production source maps & debug mode; keep storage buckets private (presigned URLs); enforce HTTPS + security headers; audit dependencies (`npm audit`).

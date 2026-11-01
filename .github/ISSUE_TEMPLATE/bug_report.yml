@@ -1,0 +1,63 @@
+name: Bug Report
+description: Report an issue, bug, or installation failure in ai-skills-ecosystem
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please provide as much detail as possible to help us reproduce and fix it.
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: e.g. Windows 11, macOS Sequoia (15.1), Ubuntu 24.04 LTS
+      placeholder: Windows 11
+    validations:
+      required: true
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js Version
+      description: Output of `node -v` (Node >= 18 required)
+      placeholder: v20.18.0
+    validations:
+      required: true
+  - type: input
+    id: agent-version
+    attributes:
+      label: Antigravity / Agent CLI Version
+      description: e.g. Google Antigravity 2.0, agy CLI 1.4.0, Claude Code, Cursor 0.44, OpenAI Codex CLI
+      placeholder: Google Antigravity 2.0 / agy CLI
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command Executed
+      description: The exact command you ran
+      placeholder: npx -y ai-skills-ecosystem install antigravity
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened, including any unexpected behavior or errors.
+    validations:
+      required: true
+  - type: textarea
+    id: doctor-output
+    attributes:
+      label: Verbose or Doctor Output
+      description: Please paste the output of `npx -y ai-skills-ecosystem doctor` or terminal error logs here.
+      render: shell
+    validations:
+      required: false

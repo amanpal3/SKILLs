@@ -27,7 +27,7 @@ All skills, scripts, and workflows in this ecosystem adhere to the following man
 ### B. Safe Installer Execution & Non-Destructive Operations
 * All installers create automated backups in `~/.gemini/backups/` before modifying files.
 * Path validation (`assertSafePath`) blocks path traversal, UNC network paths, root system directories (`C:\Windows`, `/etc`), and sensitive credential vaults (`.ssh`, `.aws`, `.gnupg`, `.git`).
-* Uninstallation (`npx ai-ecosystem uninstall` / `install-skills.ps1 uninstall`) safely removes only declared ecosystem skills, strictly preserving user code and configurations.
+* Uninstallation (`npx dr-skills uninstall` / `install-skills.ps1 uninstall`) safely removes only declared ecosystem skills, strictly preserving user code and configurations.
 
 ### C. Sandboxed Subagent Execution
 * Subagents and autonomous processes (`codex exec`, `ralph-loop`, `gsd-executor`) must operate with bounded workspace permissions.
@@ -38,7 +38,7 @@ All skills, scripts, and workflows in this ecosystem adhere to the following man
 * Registry tools (`shadcn`, `21st`) inspect source components before local installation.
 
 ### E. Continuous Diagnostics (`doctor`)
-* Run `npx ai-ecosystem doctor` to execute empirical health checks on Node version, manifest integrity, MCP configurations, secret detection, and file permissions.
+* Run `npx dr-skills doctor` to execute empirical health checks on Node version, manifest integrity, MCP configurations, secret detection, and file permissions.
 
 ---
 
@@ -57,7 +57,7 @@ For fork maintainers and team deployments, we enforce:
 If you discover a potential security vulnerability or secret leak within this repository:
 
 1. **Do NOT open a public issue.**
-2. Please report the issue privately through **[GitHub Private Vulnerability Reporting](https://github.com/amanpal3/SKILLs/security/advisories/new)** or contact the repository maintainer directly.
+2. Please report the issue privately through **[GitHub Private Vulnerability Reporting](https://github.com/amanpal3/Dr-SKILLs/security/advisories/new)** or contact the repository maintainer directly.
 3. Include:
    - Description of the vulnerability
    - Affected skill, plugin, or script

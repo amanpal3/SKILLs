@@ -1,0 +1,110 @@
+name: CI & Distribution Quality Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  json-lint:
+    name: JSON & Manifest Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate JSON Files
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('package.json valid');"
+          node -e "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')); console.log('manifest.json valid');"
+          node -e "JSON.parse(require('fs').readFileSync('mcp.json', 'utf8')); console.log('mcp.json valid');"
+          node -e "JSON.parse(require('fs').readFileSync('integrity.json', 'utf8')); console.log('integrity.json valid');"
+
+      - name: Enforce Self-Validating Catalog Gate
+        run: node scripts/sync-catalog.js --check
+
+  matrix-tests:
+    name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18, 20, 22]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Validate CLI Help
+        run: node bin/ai-ecosystem.js help
+
+      - name: Run Diagnostics Doctor
+        run: node bin/ai-ecosystem.js doctor
+
+      - name: Run Test Suite
+        run: npm test
+
+      - name: Audit Nested Plugin Manifests
+        run: |
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+          function check(dir) {
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              if (entry.name === 'node_modules' || entry.name === '.git') continue;
+              const full = path.join(dir, entry.name);
+              if (entry.isDirectory()) check(full);
+              else if (entry.isFile() && entry.name === 'package.json') {
+                const pkg = JSON.parse(fs.readFileSync(full, 'utf8'));
+                console.log('Verified valid plugin manifest: ' + full + ' (' + (pkg.name || 'unnamed') + ')');
+              }
+            }
+          }
+          check('.agent/plugins');
+          "
+
+  pack-verification:
+    name: NPM Pack & Tarball Distribution Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify Package Packing
+        run: |
+          TARBALL=$(npm pack)
+          echo "Generated tarball: $TARBALL"
+          test -f "$TARBALL"
+          tar -tf "$TARBALL" | grep "package/bin/ai-ecosystem.js"
+          tar -tf "$TARBALL" | grep "package/manifest.json"
+          tar -tf "$TARBALL" | grep "package/integrity.json"
+          tar -tf "$TARBALL" | grep "package/.agent/skills/antigravity-agents/SKILL.md"
+
+      - name: Test Extracted Tarball CLI Execution
+        run: |
+          TARBALL=$(ls *.tgz | head -n 1)
+          mkdir /tmp/tarball-test
+          cd /tmp/tarball-test
+          npx -y "${GITHUB_WORKSPACE}/${TARBALL}" help
+          npx -y "${GITHUB_WORKSPACE}/${TARBALL}" doctor

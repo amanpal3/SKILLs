@@ -1,43 +1,67 @@
 {
-  "name": "ai-skills-ecosystem",
+  "name": "dr-skills",
   "version": "2.1.0",
-  "description": "Universal AI Developer Agent Ecosystem providing modular skills, plugins, MCP servers, and multi-agent governance rules.",
+  "description": "Dr-SKILLs: Universal AI Developer Agent Ecosystem providing modular skills, plugins, MCP servers, and multi-agent governance rules for Google Antigravity, Claude Code, Cursor, and Codex.",
   "main": "security/index.js",
   "bin": {
-    "ai-ecosystem": "./bin/ai-ecosystem.js",
-    "skills": "./bin/ai-ecosystem.js"
+    "dr-skills": "bin/ai-ecosystem.js",
+    "ai-skills-ecosystem": "bin/ai-ecosystem.js",
+    "ai-ecosystem": "bin/ai-ecosystem.js",
+    "skills": "bin/ai-ecosystem.js"
   },
   "scripts": {
+    "test": "node --test tests/security/*.test.js",
+    "test:security": "node --test tests/security/*.test.js",
     "doctor": "node bin/ai-ecosystem.js doctor",
-    "install": "node bin/ai-ecosystem.js install all",
+    "sync:catalog": "node scripts/sync-catalog.js",
+    "verify:catalog": "node scripts/sync-catalog.js --check",
+    "install:all": "node bin/ai-ecosystem.js install all",
     "update": "node bin/ai-ecosystem.js update",
-    "uninstall": "node bin/ai-ecosystem.js uninstall",
-    "test:security": "node --test tests/security/*.test.js"
+    "uninstall": "node bin/ai-ecosystem.js uninstall"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amanpal3/Dr-SKILLs.git"
+  },
+  "homepage": "https://github.com/amanpal3/Dr-SKILLs",
+  "bugs": {
+    "url": "https://github.com/amanpal3/Dr-SKILLs/issues"
   },
   "keywords": [
+    "dr-skills",
     "ai-agent",
+    "ai-agents",
+    "ai-agent-skills",
     "skills",
     "mcp",
     "antigravity",
+    "google-antigravity",
     "claude-code",
     "codex",
+    "codex-cli",
     "cursor",
     "developer-tools",
+    "developer-productivity",
     "security-hardened"
   ],
-  "author": "Antigravity Engineering",
-  "license": "Apache-2.0",
+  "author": "Aman Pal",
+  "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
   },
   "files": [
     "bin/",
     "security/",
+    "scripts/",
+    "assets/",
     ".agent/skills/",
     ".agent/plugins/",
+    "!.agent/plugins/ponytail/benchmarks/**",
     ".agent/workflows/",
+    ".agent/rules/",
     "manifest.json",
     "mcp.json",
+    "integrity.json",
     "AGENTS.md",
     "CLAUDE.md",
     "CODEX.md",

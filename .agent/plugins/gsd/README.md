@@ -94,6 +94,7 @@ cd your-project
 
 # Clone the GSD template
 git clone https://github.com/toonight/get-shit-done-for-antigravity.git gsd-template
+git -C gsd-template checkout 5b7762fd6f5ad5119a6f591fa943c48b6ab6028a
 
 # Copy to your project
 Copy-Item -Recurse gsd-template\.agent .\
@@ -122,6 +123,7 @@ cd your-project
 
 # Clone the GSD template
 git clone https://github.com/toonight/get-shit-done-for-antigravity.git gsd-template
+git -C gsd-template checkout 5b7762fd6f5ad5119a6f591fa943c48b6ab6028a
 
 # Copy to your project
 cp -r gsd-template/.agent ./

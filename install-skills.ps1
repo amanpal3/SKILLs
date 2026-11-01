@@ -72,16 +72,74 @@ function Assert-SafePath {
         }
     }
 
+    # Reject symlinks and reparse points in existing path components
+    $testTarget = $cleanPath
+    while ($testTarget -and (Test-Path $testTarget)) {
+        $item = Get-Item -LiteralPath $testTarget -Force
+        if ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) {
+            throw "Security Block: Symlink or junction detected in path component: '$testTarget'. Links are prohibited in installation targets."
+        }
+        $parent = Split-Path -Parent $testTarget
+        if ($parent -eq $testTarget) { break }
+        $testTarget = $parent
+    }
+
     return $cleanPath
+}
+
+function Copy-SecureDirectory {
+    param([string]$SourceDir, [string]$DestinationDir)
+    $SourceDir = (Resolve-Path $SourceDir).Path
+    if (-not (Test-Path $SourceDir)) { return }
+
+    $srcItem = Get-Item -LiteralPath $SourceDir -Force
+    if ($srcItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) {
+        throw "Security Block: Symlink or junction detected at source root: '$SourceDir'."
+    }
+
+    if (-not (Test-Path $DestinationDir)) {
+        New-Item -ItemType Directory -Path $DestinationDir -Force | Out-Null
+    }
+
+    Get-ChildItem -LiteralPath $SourceDir -Recurse -Force | ForEach-Object {
+        if ($_.Attributes -band [System.IO.FileAttributes]::ReparsePoint) {
+            throw "Security Block: Symlink or junction detected at: '$($_.FullName)'. Links are prohibited during secure copy."
+        }
+        $relPath = $_.FullName.Substring($SourceDir.Length).TrimStart('\', '/')
+        $targetItem = Join-Path $DestinationDir $relPath
+        if ($_.PSIsContainer) {
+            if (-not (Test-Path $targetItem)) {
+                New-Item -ItemType Directory -Path $targetItem -Force | Out-Null
+            }
+        } else {
+            $targetParent = Split-Path -Parent $targetItem
+            if (-not (Test-Path $targetParent)) {
+                New-Item -ItemType Directory -Path $targetParent -Force | Out-Null
+            }
+            Copy-Item -LiteralPath $_.FullName -Destination $targetItem -Force
+        }
+    }
 }
 
 function Backup-Directory {
     param([string]$PathToBackup, [string]$Label)
     if (Test-Path $PathToBackup) {
+        $validatedPath = Assert-SafePath $PathToBackup
         if (-not (Test-Path $BackupStore)) { New-Item -ItemType Directory -Path $BackupStore -Force | Out-Null }
         $timestamp = (Get-Date -Format "yyyyMMdd_HHmmss")
         $destBackup = Join-Path $BackupStore "backup_${Label}_$timestamp"
-        Copy-Item -Path $PathToBackup -Destination $destBackup -Recurse -Force
+        $dataDir = Join-Path $destBackup "data"
+        New-Item -ItemType Directory -Path $dataDir -Force | Out-Null
+
+        $metadata = @{
+            backupId = (Split-Path -Leaf $destBackup)
+            label = $Label
+            timestamp = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+            originalTarget = $validatedPath
+        } | ConvertTo-Json
+        Set-Content -LiteralPath (Join-Path $destBackup "backup-metadata.json") -Value $metadata -Encoding UTF8
+
+        Copy-SecureDirectory -SourceDir $validatedPath -DestinationDir $dataDir
         Write-Host "  [BACKUP] Created secure backup at: $destBackup" -ForegroundColor Cyan
         return $destBackup
     }
@@ -108,7 +166,8 @@ function Write-Banner {
     param([string]$msg)
     Write-Host ""
     Write-Host "============================================" -ForegroundColor Cyan
-    Write-Host "  $msg" -ForegroundColor White
+    Write-Host "  Dr-SKILLs 🩺⚡ -- $msg" -ForegroundColor White
+    Write-Host "  Watermark: Curated by Aman Pal * MIT" -ForegroundColor DarkCyan
     Write-Host "============================================" -ForegroundColor Cyan
     Write-Host ""
 }
@@ -142,64 +201,49 @@ if ($Action -eq "store") {
 
     # 2. Copy skills to Global Store
     $SkillsDest = Join-Path $GlobalStore "skills"
-    if (Test-Path $SkillsDest) { Remove-Item $SkillsDest -Recurse -Force }
-    Copy-Item $SourceSkills -Destination $SkillsDest -Recurse -Force
+    Copy-SecureDirectory -SourceDir $SourceSkills -DestinationDir $SkillsDest
     Write-Host "[OK] Skills copied to $SkillsDest" -ForegroundColor Green
 
     # 3. Antigravity Global Discovery: ~/.gemini/config/skills
     $GeminiSkillsDest = Join-Path $GeminiConfig "skills"
-    if (-not (Test-Path $GeminiSkillsDest)) { New-Item -ItemType Directory -Path $GeminiSkillsDest -Force | Out-Null }
-    Copy-Item -Recurse -Force "$SourceSkills\*" $GeminiSkillsDest
+    Copy-SecureDirectory -SourceDir $SourceSkills -DestinationDir $GeminiSkillsDest
     Write-Host "[OK] Skills synced to Antigravity global config ($GeminiSkillsDest)" -ForegroundColor Green
 
     # 4. Also sync ~/.agent/skills (Universal Agent standard)
     $AgentSkillsDest = "$env:USERPROFILE\.agent\skills"
-    if (-not (Test-Path $AgentSkillsDest)) { New-Item -ItemType Directory -Path $AgentSkillsDest -Force | Out-Null }
-    Copy-Item -Recurse -Force "$SourceSkills\*" $AgentSkillsDest
+    Copy-SecureDirectory -SourceDir $SourceSkills -DestinationDir $AgentSkillsDest
     Write-Host "[OK] Skills synced to $AgentSkillsDest" -ForegroundColor Green
 
     # 5. Also sync ~/.codex/skills (OpenAI Codex CLI)
     $CodexSkillsDest = "$env:USERPROFILE\.codex\skills"
-    if (-not (Test-Path $CodexSkillsDest)) { New-Item -ItemType Directory -Path $CodexSkillsDest -Force | Out-Null }
-    Copy-Item -Recurse -Force "$SourceSkills\*" $CodexSkillsDest
+    Copy-SecureDirectory -SourceDir $SourceSkills -DestinationDir $CodexSkillsDest
     Write-Host "[OK] Skills synced to $CodexSkillsDest" -ForegroundColor Green
-
-    # 6. Also sync ~/.agents/skills (Cross-agent fallback)
-    $AgentsSkillsDest = "$env:USERPROFILE\.agents\skills"
-    if (-not (Test-Path $AgentsSkillsDest)) { New-Item -ItemType Directory -Path $AgentsSkillsDest -Force | Out-Null }
-    Copy-Item -Recurse -Force "$SourceSkills\*" $AgentsSkillsDest
-    Write-Host "[OK] Skills synced to $AgentsSkillsDest" -ForegroundColor Green
 
     # 7. Copy plugins
     if (Test-Path $SourcePlugins) {
         $PluginsDest = Join-Path $GlobalStore "plugins"
-        if (Test-Path $PluginsDest) { Remove-Item $PluginsDest -Recurse -Force }
-        Copy-Item $SourcePlugins -Destination $PluginsDest -Recurse -Force
+        Copy-SecureDirectory -SourceDir $SourcePlugins -DestinationDir $PluginsDest
         Write-Host "[OK] Plugins copied to $PluginsDest" -ForegroundColor Green
 
         # Antigravity Global Discovery: ~/.gemini/config/plugins
         $GeminiPluginsDest = Join-Path $GeminiConfig "plugins"
-        if (-not (Test-Path $GeminiPluginsDest)) { New-Item -ItemType Directory -Path $GeminiPluginsDest -Force | Out-Null }
-        Copy-Item -Recurse -Force "$SourcePlugins\*" $GeminiPluginsDest
+        Copy-SecureDirectory -SourceDir $SourcePlugins -DestinationDir $GeminiPluginsDest
         Write-Host "[OK] Plugins synced to Antigravity global config ($GeminiPluginsDest)" -ForegroundColor Green
 
         # Also sync ~/.agent/plugins
         $AgentPluginsDest = "$env:USERPROFILE\.agent\plugins"
-        if (-not (Test-Path $AgentPluginsDest)) { New-Item -ItemType Directory -Path $AgentPluginsDest -Force | Out-Null }
-        Copy-Item -Recurse -Force "$SourcePlugins\*" $AgentPluginsDest
+        Copy-SecureDirectory -SourceDir $SourcePlugins -DestinationDir $AgentPluginsDest
         Write-Host "[OK] Plugins synced to $AgentPluginsDest" -ForegroundColor Green
     }
 
     # 8. Copy workflows
     if (Test-Path $SourceWorkflows) {
         $WorkflowsDest = Join-Path $GlobalStore "workflows"
-        if (Test-Path $WorkflowsDest) { Remove-Item $WorkflowsDest -Recurse -Force }
-        Copy-Item $SourceWorkflows -Destination $WorkflowsDest -Recurse -Force
+        Copy-SecureDirectory -SourceDir $SourceWorkflows -DestinationDir $WorkflowsDest
         Write-Host "[OK] Workflows copied to $WorkflowsDest" -ForegroundColor Green
 
         $AgentWorkflowsDest = "$env:USERPROFILE\.agent\workflows"
-        if (-not (Test-Path $AgentWorkflowsDest)) { New-Item -ItemType Directory -Path $AgentWorkflowsDest -Force | Out-Null }
-        Copy-Item -Recurse -Force "$SourceWorkflows\*" $AgentWorkflowsDest
+        Copy-SecureDirectory -SourceDir $SourceWorkflows -DestinationDir $AgentWorkflowsDest
         Write-Host "[OK] Workflows synced to $AgentWorkflowsDest" -ForegroundColor Green
     }
 
@@ -334,16 +378,16 @@ if ($Action -eq "install") {
         New-Item -ItemType Directory -Path $TargetSkills -Force | Out-Null
     }
 
-    # Copy each skill folder
+    # Copy each skill folder securely
     $installed = 0
     Get-ChildItem $SourceSkills -Directory | ForEach-Object {
         $dest = Join-Path $TargetSkills $_.Name
-        Copy-Item $_.FullName -Destination $dest -Recurse -Force
+        Copy-SecureDirectory -SourceDir $_.FullName -DestinationDir $dest
         Write-Host "  [+] Skill: $($_.Name)" -ForegroundColor Green
         $installed++
     }
 
-    # Copy plugins if present
+    # Copy plugins securely if present
     $pluginsInstalled = 0
     if (Test-Path $SourcePlugins) {
         $TargetPlugins = Join-Path $TargetPath ".agent\plugins"
@@ -352,7 +396,7 @@ if ($Action -eq "install") {
         }
         Get-ChildItem $SourcePlugins -Directory | ForEach-Object {
             $dest = Join-Path $TargetPlugins $_.Name
-            Copy-Item $_.FullName -Destination $dest -Recurse -Force
+            Copy-SecureDirectory -SourceDir $_.FullName -DestinationDir $dest
             Write-Host "  [+] Plugin: $($_.Name)" -ForegroundColor Cyan
             $pluginsInstalled++
         }
@@ -443,8 +487,44 @@ if ($Action -eq "rollback") {
         exit 1
     }
 
+    $metaFile = Join-Path $targetBackup "backup-metadata.json"
+    if (-not (Test-Path $metaFile)) {
+        Write-Host "ERROR: Backup metadata not found in '$targetBackup'." -ForegroundColor Red
+        exit 1
+    }
+
+    $meta = Get-Content -LiteralPath $metaFile -Raw | ConvertFrom-Json
+    $originalTarget = Assert-SafePath $meta.originalTarget
+    $payloadDir = Join-Path $targetBackup "data"
+    if (-not (Test-Path $payloadDir)) { $payloadDir = $targetBackup }
+
     Write-Host "Restoring from: $targetBackup" -ForegroundColor Yellow
-    Write-Host "[OK] Rollback completed successfully from $(Split-Path -Leaf $targetBackup)" -ForegroundColor Green
+    Write-Host "Original Target: $originalTarget" -ForegroundColor Yellow
+
+    # 1. Restore to an isolated staging directory
+    $staging = Join-Path $env:TEMP ("rollback_staging_" + [System.Guid]::NewGuid().ToString("N"))
+    New-Item -ItemType Directory -Path $staging -Force | Out-Null
+
+    try {
+        Copy-SecureDirectory -SourceDir $payloadDir -DestinationDir $staging
+        $stagedItems = Get-ChildItem -LiteralPath $staging -Force
+        if ($stagedItems.Count -eq 0 -and (Get-ChildItem -LiteralPath $payloadDir -Force).Count -gt 0) {
+            throw "Rollback validation failed: Staging directory is empty."
+        }
+
+        # 2. Safely replace original target
+        if (Test-Path $originalTarget) {
+            Remove-Item -LiteralPath $originalTarget -Recurse -Force
+        }
+        New-Item -ItemType Directory -Path $originalTarget -Force | Out-Null
+        Copy-SecureDirectory -SourceDir $staging -DestinationDir $originalTarget
+
+        Write-Host "[OK] Rollback completed successfully from $(Split-Path -Leaf $targetBackup) into $originalTarget" -ForegroundColor Green
+    } finally {
+        if (Test-Path $staging) {
+            Remove-Item -LiteralPath $staging -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
 }
 
 # ----------------------------------------------------------

@@ -1,0 +1,51 @@
+name: Feature Request
+description: Suggest an idea or new skill for the AI Developer Agent Skills Ecosystem
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an enhancement! Please describe your proposal below.
+  - type: input
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A concise summary of the proposed feature or new skill.
+      placeholder: Add integration skill for Supabase Edge Functions
+    validations:
+      required: true
+  - type: dropdown
+    id: target-agent
+    attributes:
+      label: Target Agent Platform
+      description: Which agent platforms will benefit from this feature?
+      options:
+        - All Agents (Antigravity, Claude, Cursor, Codex)
+        - Google Antigravity & AGY CLI
+        - Claude Code
+        - Cursor
+        - OpenAI Codex CLI
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What challenge or friction does this feature solve?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Detailed description of how the feature or skill should work.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative implementations or existing workarounds you considered.
+    validations:
+      required: false

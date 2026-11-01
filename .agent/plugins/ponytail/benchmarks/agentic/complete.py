@@ -138,11 +138,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true", help="live: judge ranks complete > stub")
     ap.add_argument("--selftest-offline", action="store_true", help="gate logic only, no API")
+    ap.add_argument("--allow-network", action="store_true", help="Explicitly allow live LLM network calls and .env reads")
     ap.add_argument("--run", help="run dir to completeness-judge")
     args = ap.parse_args()
     if args.selftest_offline:
         sys.exit(selftest_offline())
-    key = load_key()
+    try:
+        key = load_key(allow_network=args.allow_network)
+    except PermissionError as pe:
+        sys.exit(f"\n[BLOCKED] {pe}\n")
     if not key: sys.exit("no ANTHROPIC_API_KEY (.env or env)")
     if args.selftest: sys.exit(selftest(key))
     if args.run:

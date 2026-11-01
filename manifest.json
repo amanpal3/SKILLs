@@ -1,18 +1,22 @@
 {
   "version": "2.1.0",
-  "name": "ai-skills-ecosystem",
-  "description": "Production-grade AI Skill System, MCP integrations, autonomous plugins, and multi-agent rules.",
-  "skills_count": 47,
+  "name": "Dr-SKILLs",
+  "description": "Dr-SKILLs: Production-grade AI Skill System, MCP integrations, autonomous plugins, and multi-agent rules.",
+  "skills_count": 54,
   "skills": [
     "antigravity-agents",
     "archify",
+    "banner-design",
     "brainstorming-ideas",
+    "brand",
     "brand-identity",
     "building-backend",
     "code-review",
     "context7-mcp",
     "creating-skills",
     "defend-what-you-ship",
+    "design",
+    "design-system",
     "designing-with-stitch",
     "dev-browser",
     "error-handling-patterns",
@@ -31,6 +35,7 @@
     "gsd-token-budget",
     "gsd-verifier",
     "gtm-strategy",
+    "humanizer",
     "integrating-sentry",
     "managing-firebase",
     "owasp-security",
@@ -46,7 +51,9 @@
     "ralph-prd",
     "security-audit",
     "seo-optimizer",
+    "slides",
     "testing-code",
+    "ui-styling",
     "ui-ux-pro-max",
     "unified-build-pipeline",
     "using-codex-cli",
@@ -58,7 +65,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "@21st-dev/magic@latest"
+        "@21st-dev/magic@0.2.3"
       ]
     },
     "shadcn": {
@@ -66,7 +73,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "shadcn@latest",
+        "shadcn@4.23.0",
         "mcp"
       ]
     },
